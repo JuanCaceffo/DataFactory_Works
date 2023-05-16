@@ -1,0 +1,2735 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "adf-formacion-analitica"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/parametrizacion_pasaje1')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "clase 14 parametrización",
+				"activities": [
+					{
+						"name": "Cargas",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "AzureBlobFSReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							},
+							"sink": {
+								"type": "ParquetSink",
+								"storeSettings": {
+									"type": "AzureBlobFSWriteSettings"
+								},
+								"formatSettings": {
+									"type": "ParquetWriteSettings"
+								}
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "file_csv_melina",
+								"type": "DatasetReference",
+								"parameters": {
+									"contenedor": {
+										"value": "@pipeline().parameters.contenedor",
+										"type": "Expression"
+									},
+									"carpeta": {
+										"value": "@pipeline().parameters.folder_name_csv",
+										"type": "Expression"
+									},
+									"archivo": "cargas_2023.csv"
+								}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "file_parquet_melina",
+								"type": "DatasetReference",
+								"parameters": {
+									"contenedor": {
+										"value": "@pipeline().parameters.contenedor",
+										"type": "Expression"
+									},
+									"carpeta": {
+										"value": "@pipeline().parameters.folder_name_parquet",
+										"type": "Expression"
+									},
+									"archivo": "cargas_p_2023"
+								}
+							}
+						]
+					},
+					{
+						"name": "Sitios",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "AzureBlobFSReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							},
+							"sink": {
+								"type": "ParquetSink",
+								"storeSettings": {
+									"type": "AzureBlobFSWriteSettings"
+								},
+								"formatSettings": {
+									"type": "ParquetWriteSettings"
+								}
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "file_csv_melina",
+								"type": "DatasetReference",
+								"parameters": {
+									"contenedor": {
+										"value": "@pipeline().parameters.contenedor",
+										"type": "Expression"
+									},
+									"carpeta": {
+										"value": "@pipeline().parameters.folder_name_csv",
+										"type": "Expression"
+									},
+									"archivo": "sitios_2023.csv"
+								}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "file_parquet_melina",
+								"type": "DatasetReference",
+								"parameters": {
+									"contenedor": {
+										"value": "@pipeline().parameters.contenedor",
+										"type": "Expression"
+									},
+									"carpeta": {
+										"value": "@pipeline().parameters.folder_name_parquet",
+										"type": "Expression"
+									},
+									"archivo": "sitios_p_2023"
+								}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"parameters": {
+					"contenedor": {
+						"type": "string",
+						"defaultValue": "melinayanguas"
+					},
+					"folder_name_csv": {
+						"type": "string",
+						"defaultValue": "clase-parametrizacion/file_csv"
+					},
+					"folder_name_parquet": {
+						"type": "string",
+						"defaultValue": "clase-parametrizacion/file_parquet"
+					}
+				},
+				"folder": {
+					"name": "melina-yanguas"
+				},
+				"annotations": [],
+				"lastPublishTime": "2023-05-10T15:10:33Z"
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/parametrizaciones')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Cargas",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "AzureBlobFSReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							},
+							"sink": {
+								"type": "ParquetSink",
+								"storeSettings": {
+									"type": "AzureBlobFSWriteSettings"
+								},
+								"formatSettings": {
+									"type": "ParquetWriteSettings"
+								}
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "files_csv",
+								"type": "DatasetReference",
+								"parameters": {
+									"cta_almacenamiento": {
+										"value": "@pipeline().parameters.cta_almacenamiento",
+										"type": "Expression"
+									},
+									"folder_name": {
+										"value": "@pipeline().parameters.folder_name_csv",
+										"type": "Expression"
+									},
+									"file_name": "cargas_2023.csv"
+								}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "files_parquet",
+								"type": "DatasetReference",
+								"parameters": {
+									"cta_almacenamiento": {
+										"value": "@pipeline().parameters.cta_almacenamiento",
+										"type": "Expression"
+									},
+									"folder_name": {
+										"value": "@pipeline().parameters.folder_name_parquet",
+										"type": "Expression"
+									},
+									"file_name": "cargas"
+								}
+							}
+						]
+					},
+					{
+						"name": "Sitios",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "AzureBlobFSReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							},
+							"sink": {
+								"type": "ParquetSink",
+								"storeSettings": {
+									"type": "AzureBlobFSWriteSettings"
+								},
+								"formatSettings": {
+									"type": "ParquetWriteSettings"
+								}
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "files_csv",
+								"type": "DatasetReference",
+								"parameters": {
+									"cta_almacenamiento": {
+										"value": "@pipeline().parameters.cta_almacenamiento",
+										"type": "Expression"
+									},
+									"folder_name": {
+										"value": "@pipeline().parameters.folder_name_csv",
+										"type": "Expression"
+									},
+									"file_name": "sitios_2023.csv"
+								}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "files_parquet",
+								"type": "DatasetReference",
+								"parameters": {
+									"cta_almacenamiento": {
+										"value": "@pipeline().parameters.cta_almacenamiento",
+										"type": "Expression"
+									},
+									"folder_name": {
+										"value": "@pipeline().parameters.folder_name_parquet",
+										"type": "Expression"
+									},
+									"file_name": "sitios"
+								}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"parameters": {
+					"cta_almacenamiento": {
+						"type": "string",
+						"defaultValue": "clase-parametrizacion"
+					},
+					"folder_name_csv": {
+						"type": "string",
+						"defaultValue": "files_csv"
+					},
+					"folder_name_parquet": {
+						"type": "string",
+						"defaultValue": "files_parquet"
+					}
+				},
+				"folder": {
+					"name": "Clase parametrizacion"
+				},
+				"annotations": [],
+				"lastPublishTime": "2023-05-10T15:03:28Z"
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/parquetPartitoned_to_MergeParquet')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "parquet unficado",
+						"type": "ForEach",
+						"dependsOn": [],
+						"userProperties": [],
+						"typeProperties": {
+							"items": {
+								"value": "@variables('list_table')",
+								"type": "Expression"
+							},
+							"isSequential": true,
+							"activities": [
+								{
+									"name": "copyData_Parquet_mergeParquet",
+									"type": "Copy",
+									"dependsOn": [],
+									"policy": {
+										"timeout": "0.12:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"source": {
+											"type": "ParquetSource",
+											"storeSettings": {
+												"type": "AzureBlobFSReadSettings",
+												"recursive": true,
+												"wildcardFolderPath": {
+													"value": "@concat(pipeline().parameters.folder,'/',utcNow('yyyy'),'/',utcNow('MM-dd-yyyy'))",
+													"type": "Expression"
+												},
+												"wildcardFileName": "*.parquet",
+												"enablePartitionDiscovery": false
+											},
+											"formatSettings": {
+												"type": "ParquetReadSettings"
+											}
+										},
+										"sink": {
+											"type": "ParquetSink",
+											"storeSettings": {
+												"type": "AzureBlobFSWriteSettings",
+												"copyBehavior": "MergeFiles"
+											},
+											"formatSettings": {
+												"type": "ParquetWriteSettings"
+											}
+										},
+										"enableStaging": false,
+										"translator": {
+											"type": "TabularTranslator",
+											"typeConversion": true,
+											"typeConversionSettings": {
+												"allowDataTruncation": true,
+												"treatBooleanAsNumber": false
+											}
+										}
+									},
+									"inputs": [
+										{
+											"referenceName": "Parquet_Partitioned_entrada_JC",
+											"type": "DatasetReference",
+											"parameters": {
+												"folder": {
+													"value": "@concat(pipeline().parameters.folder,'/',utcNow('yyyy'),'/',utcNow('MM-dd-yyyy'))",
+													"type": "Expression"
+												},
+												"file": {
+													"value": "@item()",
+													"type": "Expression"
+												}
+											}
+										}
+									],
+									"outputs": [
+										{
+											"referenceName": "Parquet_merged_salida_JC",
+											"type": "DatasetReference",
+											"parameters": {
+												"folder": {
+													"value": "@concat(pipeline().parameters.folder,'/',utcNow('yyyy'),'/',utcNow('MM-dd-yyyy'))",
+													"type": "Expression"
+												},
+												"file": {
+													"value": "@concat(item(),'.parquet')",
+													"type": "Expression"
+												}
+											}
+										}
+									]
+								}
+							]
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"parameters": {
+					"folder": {
+						"type": "string",
+						"defaultValue": "AdventureWorks_ADF/trusted_data"
+					}
+				},
+				"variables": {
+					"list_table": {
+						"type": "Array",
+						"defaultValue": [
+							"Product",
+							"ProductCategory",
+							"ProductModel",
+							"ProductModelProductDescription",
+							"ProductDescription",
+							"SalesOrderDetail",
+							"SalesOrderHeader",
+							"Address",
+							"Customer",
+							"CustomerAddress"
+						]
+					}
+				},
+				"folder": {
+					"name": "JuanCaceffo/AdventureWorks"
+				},
+				"annotations": [],
+				"lastPublishTime": "2023-05-15T00:05:45Z"
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/pipelincito_suarez')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "ForEach_database",
+						"type": "ForEach",
+						"dependsOn": [],
+						"userProperties": [],
+						"typeProperties": {
+							"items": {
+								"value": "@createArray('Product','ProductCategory','ProductModel','ProductModelProductDescription','SalesOrderDetail','CustomerAddress','Address','SalesOrderHeader','Customer')",
+								"type": "Expression"
+							},
+							"activities": [
+								{
+									"name": "Copy data to raw_data",
+									"type": "Copy",
+									"dependsOn": [],
+									"policy": {
+										"timeout": "0.12:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"source": {
+											"type": "AzureSqlSource",
+											"queryTimeout": "02:00:00",
+											"partitionOption": "None"
+										},
+										"sink": {
+											"type": "DelimitedTextSink",
+											"storeSettings": {
+												"type": "AzureBlobFSWriteSettings"
+											},
+											"formatSettings": {
+												"type": "DelimitedTextWriteSettings",
+												"quoteAllText": true,
+												"fileExtension": ".csv"
+											}
+										},
+										"enableStaging": false,
+										"translator": {
+											"type": "TabularTranslator",
+											"typeConversion": true,
+											"typeConversionSettings": {
+												"allowDataTruncation": true,
+												"treatBooleanAsNumber": false
+											}
+										}
+									},
+									"inputs": [
+										{
+											"referenceName": "AzureSqlTableSuarez",
+											"type": "DatasetReference",
+											"parameters": {
+												"schemaname": "SalesLT",
+												"tablename": {
+													"value": "@item()",
+													"type": "Expression"
+												},
+												"databasename": "AdventureWorks"
+											}
+										}
+									],
+									"outputs": [
+										{
+											"referenceName": "to_csv_suarez",
+											"type": "DatasetReference",
+											"parameters": {
+												"container": "suareznicolas",
+												"carpeta": {
+													"value": "@concat('raw_data/AdventureWorks/',utcNow('yyyy'),'/',utcNow('dd-MM-yyyy'))",
+													"type": "Expression"
+												},
+												"archivo": {
+													"value": "@item()",
+													"type": "Expression"
+												}
+											}
+										}
+									]
+								}
+							]
+						}
+					},
+					{
+						"name": "ForEach_databricks",
+						"type": "ForEach",
+						"dependsOn": [
+							{
+								"activity": "ForEach_database",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"items": {
+								"value": "@createArray('Product','ProductCategory','ProductModel','ProductModelProductDescription','SalesOrderDetail','CustomerAddress','Address','SalesOrderHeader','Customer')",
+								"type": "Expression"
+							},
+							"activities": [
+								{
+									"name": "Notebook_AdventureWorks_suarez",
+									"type": "DatabricksNotebook",
+									"dependsOn": [],
+									"policy": {
+										"timeout": "0.12:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"notebookPath": "/Users/suareznicolas20@gmail.com/ADF: Conexión al datalake desde ADF",
+										"baseParameters": {
+											"file_name": {
+												"value": "@item()",
+												"type": "Expression"
+											},
+											"year": {
+												"value": "@utcNow('yyyy')",
+												"type": "Expression"
+											},
+											"year_folder": {
+												"value": "@utcNow('dd-MM-yyyy')",
+												"type": "Expression"
+											}
+										}
+									},
+									"linkedServiceName": {
+										"referenceName": "AzureDatabricksSuarez",
+										"type": "LinkedServiceReference"
+									}
+								}
+							]
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"folder": {
+					"name": "suareznicolas"
+				},
+				"annotations": [],
+				"lastPublishTime": "2023-05-14T20:06:29Z"
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/pipeline1')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "copiar_tranformar_parquet_csv",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "ParquetSource",
+								"storeSettings": {
+									"type": "AzureBlobFSReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "ParquetReadSettings"
+								}
+							},
+							"sink": {
+								"type": "DelimitedTextSink",
+								"storeSettings": {
+									"type": "AzureBlobFSWriteSettings"
+								},
+								"formatSettings": {
+									"type": "DelimitedTextWriteSettings",
+									"quoteAllText": true,
+									"fileExtension": ".csv"
+								}
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "entrada_star_wors",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "salida_star_word",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"folder": {
+					"name": "juan_maidana"
+				},
+				"annotations": [],
+				"lastPublishTime": "2023-05-10T12:27:16Z"
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/pipelineAdw')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "ForEach1",
+						"type": "ForEach",
+						"dependsOn": [],
+						"userProperties": [],
+						"typeProperties": {
+							"items": {
+								"value": "@createArray('Product','ProductCategory','ProductModel','ProductModelProductDescription','SalesOrderDetail','CustomerAddress','Address','SalesOrderHeader','Customer','ProductDescription')",
+								"type": "Expression"
+							},
+							"isSequential": true,
+							"activities": [
+								{
+									"name": "Copy data Adw",
+									"type": "Copy",
+									"dependsOn": [],
+									"policy": {
+										"timeout": "0.12:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"source": {
+											"type": "AzureSqlSource",
+											"queryTimeout": "02:00:00",
+											"partitionOption": "None"
+										},
+										"sink": {
+											"type": "DelimitedTextSink",
+											"storeSettings": {
+												"type": "AzureBlobFSWriteSettings"
+											},
+											"formatSettings": {
+												"type": "DelimitedTextWriteSettings",
+												"quoteAllText": true,
+												"fileExtension": ".txt"
+											}
+										},
+										"enableStaging": false,
+										"translator": {
+											"type": "TabularTranslator",
+											"typeConversion": true,
+											"typeConversionSettings": {
+												"allowDataTruncation": true,
+												"treatBooleanAsNumber": false
+											}
+										}
+									},
+									"inputs": [
+										{
+											"referenceName": "AzureSqlTablita",
+											"type": "DatasetReference",
+											"parameters": {
+												"esquema": "SalesLt",
+												"tabla": {
+													"value": "@item()",
+													"type": "Expression"
+												}
+											}
+										}
+									],
+									"outputs": [
+										{
+											"referenceName": "Adw_nico",
+											"type": "DatasetReference",
+											"parameters": {
+												"contenedor": "nicolasfernandez",
+												"carpeta": "AdventureWorks",
+												"archivo": {
+													"value": "@item()",
+													"type": "Expression"
+												}
+											}
+										}
+									]
+								}
+							]
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"folder": {
+					"name": "nicolas_fernandez/AdventureWorks"
+				},
+				"annotations": [],
+				"lastPublishTime": "2023-05-14T03:05:15Z"
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/pipeline_clase')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Cargas",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "AzureBlobFSReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							},
+							"sink": {
+								"type": "ParquetSink",
+								"storeSettings": {
+									"type": "AzureBlobFSWriteSettings"
+								},
+								"formatSettings": {
+									"type": "ParquetWriteSettings"
+								}
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "Sitio_carga",
+								"type": "DatasetReference",
+								"parameters": {
+									"contenedor": {
+										"value": "@pipeline().parameters.contenedor",
+										"type": "Expression"
+									},
+									"carpeta": {
+										"value": "@pipeline().parameters.carpeta_entrada",
+										"type": "Expression"
+									},
+									"archivo": "cargas_2023.csv"
+								}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "file_parquet_mj",
+								"type": "DatasetReference",
+								"parameters": {
+									"contenedor": {
+										"value": "@pipeline().parameters.contenedor",
+										"type": "Expression"
+									},
+									"carpeta": {
+										"value": "@pipeline().parameters.carpeta_salida",
+										"type": "Expression"
+									},
+									"archivo": "cargas_2023.parquet"
+								}
+							}
+						]
+					},
+					{
+						"name": "Sitios",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "Cargas",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "AzureBlobFSReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							},
+							"sink": {
+								"type": "ParquetSink",
+								"storeSettings": {
+									"type": "AzureBlobFSWriteSettings"
+								},
+								"formatSettings": {
+									"type": "ParquetWriteSettings"
+								}
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "Sitio_carga",
+								"type": "DatasetReference",
+								"parameters": {
+									"contenedor": {
+										"value": "@pipeline().parameters.contenedor",
+										"type": "Expression"
+									},
+									"carpeta": {
+										"value": "@pipeline().parameters.carpeta_entrada",
+										"type": "Expression"
+									},
+									"archivo": "sitios_2023.csv"
+								}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "file_parquet_mj",
+								"type": "DatasetReference",
+								"parameters": {
+									"contenedor": {
+										"value": "@pipeline().parameters.contenedor",
+										"type": "Expression"
+									},
+									"carpeta": {
+										"value": "@pipeline().parameters.carpeta_salida",
+										"type": "Expression"
+									},
+									"archivo": "sitios_2023.parquet"
+								}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"parameters": {
+					"contenedor": {
+						"type": "string",
+						"defaultValue": "juanmaidana"
+					},
+					"carpeta_entrada": {
+						"type": "string",
+						"defaultValue": "Entradas"
+					},
+					"carpeta_salida": {
+						"type": "string",
+						"defaultValue": "Salida"
+					}
+				},
+				"folder": {
+					"name": "juan_maidana"
+				},
+				"annotations": [],
+				"lastPublishTime": "2023-05-10T15:03:50Z"
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/pipeline_copydata_maria_sol')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Copydata_mariasol",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "AzureBlobFSReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							},
+							"sink": {
+								"type": "DelimitedTextSink",
+								"storeSettings": {
+									"type": "AzureBlobFSWriteSettings"
+								},
+								"formatSettings": {
+									"type": "DelimitedTextWriteSettings",
+									"quoteAllText": true,
+									"fileExtension": ".txt"
+								}
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "entrada_copydata",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "salida_copydata",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"folder": {
+					"name": "maria_sol_serritelli"
+				},
+				"annotations": [],
+				"lastPublishTime": "2023-05-09T23:56:37Z"
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/pipeline_demo_pasaje')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "copiar_data_otro_contenedor",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "AzureBlobFSReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							},
+							"sink": {
+								"type": "DelimitedTextSink",
+								"storeSettings": {
+									"type": "AzureBlobFSWriteSettings"
+								},
+								"formatSettings": {
+									"type": "DelimitedTextWriteSettings",
+									"quoteAllText": true,
+									"fileExtension": ".txt"
+								}
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "starwars_characters_entrada_suarez",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "starwars_characters_salida_suarez",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"folder": {
+					"name": "suareznicolas"
+				},
+				"annotations": [],
+				"lastPublishTime": "2023-05-11T00:38:55Z"
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/pipeline_parametrizacion_maria_sol')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Sitios",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "AzureBlobFSReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							},
+							"sink": {
+								"type": "ParquetSink",
+								"storeSettings": {
+									"type": "AzureBlobFSWriteSettings"
+								},
+								"formatSettings": {
+									"type": "ParquetWriteSettings"
+								}
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "files_csv_maria_sol",
+								"type": "DatasetReference",
+								"parameters": {
+									"contenedor": {
+										"value": "@pipeline().parameters.nombre_contenedor",
+										"type": "Expression"
+									},
+									"carpeta": {
+										"value": "@pipeline().parameters.nombre_carpetacsv",
+										"type": "Expression"
+									},
+									"archivo": "sitios_2023.csv"
+								}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "files_parquet_maria_sol",
+								"type": "DatasetReference",
+								"parameters": {
+									"contenedor": {
+										"value": "@pipeline().parameters.nombre_contenedor",
+										"type": "Expression"
+									},
+									"carpeta": {
+										"value": "@pipeline().parameters.nombre_carpetaparquet",
+										"type": "Expression"
+									},
+									"archivo": "sitios_2023"
+								}
+							}
+						]
+					},
+					{
+						"name": "cargas",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "AzureBlobFSReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							},
+							"sink": {
+								"type": "ParquetSink",
+								"storeSettings": {
+									"type": "AzureBlobFSWriteSettings"
+								},
+								"formatSettings": {
+									"type": "ParquetWriteSettings"
+								}
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "files_csv_maria_sol",
+								"type": "DatasetReference",
+								"parameters": {
+									"contenedor": {
+										"value": "@pipeline().parameters.nombre_contenedor",
+										"type": "Expression"
+									},
+									"carpeta": {
+										"value": "@pipeline().parameters.nombre_carpetacsv",
+										"type": "Expression"
+									},
+									"archivo": "cargas_2023.csv"
+								}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "files_parquet_maria_sol",
+								"type": "DatasetReference",
+								"parameters": {
+									"contenedor": {
+										"value": "@pipeline().parameters.nombre_contenedor",
+										"type": "Expression"
+									},
+									"carpeta": {
+										"value": "@pipeline().parameters.nombre_carpetaparquet",
+										"type": "Expression"
+									},
+									"archivo": "cargas_2023"
+								}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"parameters": {
+					"nombre_contenedor": {
+						"type": "string",
+						"defaultValue": "mariasolserritelli"
+					},
+					"nombre_carpetaparquet": {
+						"type": "string",
+						"defaultValue": "files_parquet"
+					},
+					"nombre_carpetacsv": {
+						"type": "string",
+						"defaultValue": "files_csv"
+					}
+				},
+				"folder": {
+					"name": "maria_sol_serritelli"
+				},
+				"annotations": [],
+				"lastPublishTime": "2023-05-10T15:02:30Z"
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/pipeline_parametrizado')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Sitios",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "AzureBlobFSReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							},
+							"sink": {
+								"type": "ParquetSink",
+								"storeSettings": {
+									"type": "AzureBlobFSWriteSettings"
+								},
+								"formatSettings": {
+									"type": "ParquetWriteSettings"
+								}
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "files_csv_camila",
+								"type": "DatasetReference",
+								"parameters": {
+									"container": {
+										"value": "@pipeline().parameters.contenedor",
+										"type": "Expression"
+									},
+									"carpeta": {
+										"value": "@pipeline().parameters.carpeta_origen",
+										"type": "Expression"
+									},
+									"archivo": "sitios_2023.csv"
+								}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "files_parquet_camila",
+								"type": "DatasetReference",
+								"parameters": {
+									"container": {
+										"value": "@pipeline().parameters.contenedor",
+										"type": "Expression"
+									},
+									"carpeta": {
+										"value": "@pipeline().parameters.carpeta_destino",
+										"type": "Expression"
+									},
+									"archivo": "sitios_2023.parquet"
+								}
+							}
+						]
+					},
+					{
+						"name": "Cargas",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "Sitios",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "AzureBlobFSReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							},
+							"sink": {
+								"type": "ParquetSink",
+								"storeSettings": {
+									"type": "AzureBlobFSWriteSettings"
+								},
+								"formatSettings": {
+									"type": "ParquetWriteSettings"
+								}
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "files_csv_camila",
+								"type": "DatasetReference",
+								"parameters": {
+									"container": {
+										"value": "@pipeline().parameters.contenedor",
+										"type": "Expression"
+									},
+									"carpeta": {
+										"value": "@pipeline().parameters.carpeta_origen",
+										"type": "Expression"
+									},
+									"archivo": "cargas_2023.csv"
+								}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "files_parquet_camila",
+								"type": "DatasetReference",
+								"parameters": {
+									"container": {
+										"value": "@pipeline().parameters.contenedor",
+										"type": "Expression"
+									},
+									"carpeta": {
+										"value": "@pipeline().parameters.carpeta_destino",
+										"type": "Expression"
+									},
+									"archivo": "cargas_2023.parquet"
+								}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"parameters": {
+					"contenedor": {
+						"type": "string",
+						"defaultValue": "camilagomez"
+					},
+					"carpeta_origen": {
+						"type": "string",
+						"defaultValue": "ADF-practica/parametrizacion/origen"
+					},
+					"carpeta_destino": {
+						"type": "string",
+						"defaultValue": "ADF-practica/parametrizacion/destino"
+					}
+				},
+				"folder": {
+					"name": "Camila-Gomez"
+				},
+				"annotations": [],
+				"lastPublishTime": "2023-05-10T15:03:40Z"
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/pipeline_pasaje_maria_sol')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "pasaje",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "AzureBlobFSReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							},
+							"sink": {
+								"type": "ParquetSink",
+								"storeSettings": {
+									"type": "AzureBlobFSWriteSettings"
+								},
+								"formatSettings": {
+									"type": "ParquetWriteSettings"
+								}
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "entrada_copydata",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "salida_pasajeparquet",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"folder": {
+					"name": "maria_sol_serritelli"
+				},
+				"annotations": [],
+				"lastPublishTime": "2023-05-09T23:57:02Z"
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/pipelinepc')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "ForEach",
+						"type": "ForEach",
+						"dependsOn": [],
+						"userProperties": [],
+						"typeProperties": {
+							"items": {
+								"value": "@createArray('Product','ProductCategory','ProductModel','ProductModelProductDescription','SalesOrderDetail','CustomerAddress','Address','SalesOrderHeader','Customer','ProductDescription')",
+								"type": "Expression"
+							},
+							"isSequential": true,
+							"activities": [
+								{
+									"name": "Copy data aw",
+									"type": "Copy",
+									"dependsOn": [],
+									"policy": {
+										"timeout": "0.12:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"source": {
+											"type": "AzureSqlSource",
+											"queryTimeout": "02:00:00",
+											"partitionOption": "None"
+										},
+										"sink": {
+											"type": "DelimitedTextSink",
+											"storeSettings": {
+												"type": "AzureBlobFSWriteSettings"
+											},
+											"formatSettings": {
+												"type": "DelimitedTextWriteSettings",
+												"quoteAllText": true,
+												"fileExtension": ".csv"
+											}
+										},
+										"enableStaging": false,
+										"translator": {
+											"type": "TabularTranslator",
+											"typeConversion": true,
+											"typeConversionSettings": {
+												"allowDataTruncation": true,
+												"treatBooleanAsNumber": false
+											}
+										}
+									},
+									"inputs": [
+										{
+											"referenceName": "AzureSqlTablepc",
+											"type": "DatasetReference",
+											"parameters": {
+												"Esquema": "SalesLt",
+												"Tabla": {
+													"value": "@item()",
+													"type": "Expression"
+												}
+											}
+										}
+									],
+									"outputs": [
+										{
+											"referenceName": "Awpc",
+											"type": "DatasetReference",
+											"parameters": {
+												"conteiner": "pabloc",
+												"carpeta": "AdventureWorks",
+												"archivo": {
+													"value": "@item()",
+													"type": "Expression"
+												}
+											}
+										}
+									]
+								},
+								{
+									"name": "pipeline_Databriks",
+									"type": "ExecutePipeline",
+									"dependsOn": [
+										{
+											"activity": "Copy data aw",
+											"dependencyConditions": [
+												"Succeeded"
+											]
+										}
+									],
+									"userProperties": [],
+									"typeProperties": {
+										"pipeline": {
+											"referenceName": "pipeline_Databriks",
+											"type": "PipelineReference"
+										},
+										"waitOnCompletion": true,
+										"parameters": {}
+									}
+								}
+							]
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"folder": {
+					"name": "PabloC"
+				},
+				"annotations": [],
+				"lastPublishTime": "2023-05-15T13:30:27Z"
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/pl_1_levantaDeSQL_Azul_Selser')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "nombre_tablas",
+						"description": "Se busca el nombre de las tablas que estan dentro de la la base de datos",
+						"type": "Lookup",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": "SELECT TABLE_SCHEMA, TABLE_NAME FROM Information_Schema.Tables\nWHERE TABLE_SCHEMA != 'dbo' AND TABLE_TYPE = 'BASE TABLE'",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"dataset": {
+								"referenceName": "AW_AzureSqlTable_Azul_Selser",
+								"type": "DatasetReference",
+								"parameters": {
+									"tableName": "1"
+								}
+							},
+							"firstRowOnly": false
+						}
+					},
+					{
+						"name": "ForEach1",
+						"type": "ForEach",
+						"dependsOn": [
+							{
+								"activity": "nombre_tablas",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"items": {
+								"value": "@activity('nombre_tablas').output.value",
+								"type": "Expression"
+							},
+							"isSequential": true,
+							"activities": [
+								{
+									"name": "Copy data AW",
+									"type": "Copy",
+									"dependsOn": [],
+									"policy": {
+										"timeout": "0.12:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"source": {
+											"type": "AzureSqlSource",
+											"queryTimeout": "02:00:00",
+											"partitionOption": "None"
+										},
+										"sink": {
+											"type": "ParquetSink",
+											"storeSettings": {
+												"type": "AzureBlobFSWriteSettings"
+											},
+											"formatSettings": {
+												"type": "ParquetWriteSettings"
+											}
+										},
+										"enableStaging": true,
+										"stagingSettings": {
+											"linkedServiceName": {
+												"referenceName": "datalakeformacion1",
+												"type": "LinkedServiceReference"
+											},
+											"path": "azulselser/AW_tarea_12.05/rawdata"
+										},
+										"translator": {
+											"type": "TabularTranslator",
+											"typeConversion": true,
+											"typeConversionSettings": {
+												"allowDataTruncation": true,
+												"treatBooleanAsNumber": false
+											}
+										}
+									},
+									"inputs": [
+										{
+											"referenceName": "AW_AzureSqlTable_Azul_Selser",
+											"type": "DatasetReference",
+											"parameters": {
+												"tableName": {
+													"value": "@item().TABLE_NAME",
+													"type": "Expression"
+												}
+											}
+										}
+									],
+									"outputs": [
+										{
+											"referenceName": "AW_parquet_Azul_Selser",
+											"type": "DatasetReference",
+											"parameters": {
+												"fileName": {
+													"value": "@item().TABLE_NAME",
+													"type": "Expression"
+												}
+											}
+										}
+									]
+								}
+							]
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"folder": {
+					"name": "Azul_Selser/tarea_15.05/entrega"
+				},
+				"annotations": [],
+				"lastPublishTime": "2023-05-14T22:30:33Z"
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/pl_2_limpieza_Azul_Selser')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Get Metadata1",
+						"description": "esto nos a la lista de todos los nombres",
+						"type": "GetMetadata",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataset": {
+								"referenceName": "prueba_Metadata_Azul_Selser",
+								"type": "DatasetReference",
+								"parameters": {}
+							},
+							"fieldList": [
+								"childItems"
+							],
+							"storeSettings": {
+								"type": "AzureBlobFSReadSettings",
+								"recursive": true,
+								"enablePartitionDiscovery": false
+							},
+							"formatSettings": {
+								"type": "ParquetReadSettings"
+							}
+						}
+					},
+					{
+						"name": "ForEach1",
+						"type": "ForEach",
+						"dependsOn": [
+							{
+								"activity": "Get Metadata1",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"items": {
+								"value": "@activity('Get Metadata1').output.childItems",
+								"type": "Expression"
+							},
+							"isSequential": true,
+							"activities": [
+								{
+									"name": "limpieza y exporta en parquet",
+									"description": "-elimina registros all null\n-elimina registros duplicados\n-elimina columnas 5% null\n-guarda en formato parquet",
+									"type": "DatabricksNotebook",
+									"dependsOn": [],
+									"policy": {
+										"timeout": "0.12:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"notebookPath": "/Users/azulselser@gmail.com/ADF: Conexión al datalake_Azul_Selser",
+										"baseParameters": {
+											"file_name": {
+												"value": "@item().name",
+												"type": "Expression"
+											}
+										}
+									},
+									"linkedServiceName": {
+										"referenceName": "AzureDatabricks_Azul_Selser",
+										"type": "LinkedServiceReference"
+									}
+								}
+							]
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"folder": {
+					"name": "Azul_Selser/tarea_15.05/entrega"
+				},
+				"annotations": [],
+				"lastPublishTime": "2023-05-15T03:53:37Z"
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/pl_3_limpieza_Azul_Selser')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "nombre_tablas",
+						"type": "Lookup",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": "SELECT TABLE_SCHEMA, TABLE_NAME FROM Information_Schema.Tables\nWHERE TABLE_SCHEMA != 'dbo' AND TABLE_TYPE = 'BASE TABLE'",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"dataset": {
+								"referenceName": "AW_AzureSqlTable_Azul_Selser",
+								"type": "DatasetReference",
+								"parameters": {
+									"tableName": "1"
+								}
+							},
+							"firstRowOnly": false
+						}
+					},
+					{
+						"name": "ForEach1",
+						"type": "ForEach",
+						"dependsOn": [
+							{
+								"activity": "nombre_tablas",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"items": {
+								"value": "@activity('nombre_tablas').output.value",
+								"type": "Expression"
+							},
+							"isSequential": true,
+							"activities": [
+								{
+									"name": "limpieza y exporta en parquet",
+									"description": "-elimina registros all null\n-elimina registros duplicados\n-elimina columnas 5% null\n-guarda en formato parquet",
+									"type": "DatabricksNotebook",
+									"dependsOn": [],
+									"policy": {
+										"timeout": "0.12:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"notebookPath": "/Users/azulselser@gmail.com/ADF: Conexión al datalake_Azul_Selser",
+										"baseParameters": {
+											"file_name": {
+												"value": "@item().TABLE_NAME ",
+												"type": "Expression"
+											}
+										}
+									},
+									"linkedServiceName": {
+										"referenceName": "AzureDatabricks_Azul_Selser",
+										"type": "LinkedServiceReference"
+									}
+								}
+							]
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"folder": {
+					"name": "Azul_Selser/tarea_15.05/Demos"
+				},
+				"annotations": [],
+				"lastPublishTime": "2023-05-15T03:53:37Z"
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/pl_AW_Azul_Selser')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Lookup1",
+						"type": "Lookup",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": "SELECT TABLE_SCHEMA, TABLE_NAME FROM Information_Schema.Tables\nWHERE TABLE_SCHEMA != 'dbo' AND TABLE_TYPE = 'BASE TABLE'",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"dataset": {
+								"referenceName": "AW_AzureSqlTable_Azul_Selser",
+								"type": "DatasetReference",
+								"parameters": {
+									"tableName": "1"
+								}
+							},
+							"firstRowOnly": false
+						}
+					},
+					{
+						"name": "ForEach1",
+						"type": "ForEach",
+						"dependsOn": [
+							{
+								"activity": "Lookup1",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"items": {
+								"value": "@activity('Lookup1').output.value",
+								"type": "Expression"
+							},
+							"isSequential": true,
+							"activities": [
+								{
+									"name": "Copy data AW",
+									"type": "Copy",
+									"dependsOn": [],
+									"policy": {
+										"timeout": "0.12:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"source": {
+											"type": "AzureSqlSource",
+											"queryTimeout": "02:00:00",
+											"partitionOption": "None"
+										},
+										"sink": {
+											"type": "ParquetSink",
+											"storeSettings": {
+												"type": "AzureBlobFSWriteSettings"
+											},
+											"formatSettings": {
+												"type": "ParquetWriteSettings"
+											}
+										},
+										"enableStaging": true,
+										"stagingSettings": {
+											"linkedServiceName": {
+												"referenceName": "datalakeformacion1",
+												"type": "LinkedServiceReference"
+											},
+											"path": "azulselser/AW_tarea_12.05/rawdata"
+										},
+										"translator": {
+											"type": "TabularTranslator",
+											"typeConversion": true,
+											"typeConversionSettings": {
+												"allowDataTruncation": true,
+												"treatBooleanAsNumber": false
+											}
+										}
+									},
+									"inputs": [
+										{
+											"referenceName": "AW_AzureSqlTable_Azul_Selser",
+											"type": "DatasetReference",
+											"parameters": {
+												"tableName": {
+													"value": "@item().TABLE_NAME",
+													"type": "Expression"
+												}
+											}
+										}
+									],
+									"outputs": [
+										{
+											"referenceName": "AW_parquet_Azul_Selser",
+											"type": "DatasetReference",
+											"parameters": {
+												"fileName": {
+													"value": "@item().TABLE_NAME",
+													"type": "Expression"
+												}
+											}
+										}
+									]
+								}
+							]
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"folder": {
+					"name": "Azul_Selser/tarea_12.05"
+				},
+				"annotations": [],
+				"lastPublishTime": "2023-05-11T18:48:12Z"
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/pl_AdventureWorks_ernesto')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "IterateSQLTables",
+						"type": "ForEach",
+						"dependsOn": [],
+						"userProperties": [],
+						"typeProperties": {
+							"items": {
+								"value": "@pipeline().parameters.tableList",
+								"type": "Expression"
+							},
+							"activities": [
+								{
+									"name": "Copydata",
+									"type": "Copy",
+									"dependsOn": [],
+									"policy": {
+										"timeout": "0.12:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"source": {
+											"type": "AzureSqlSource",
+											"sqlReaderQuery": {
+												"value": "SELECT * FROM [@{item().TABLE_SCHEMA}].[@{item().TABLE_NAME}]",
+												"type": "Expression"
+											},
+											"queryTimeout": "02:00:00",
+											"partitionOption": "None"
+										},
+										"sink": {
+											"type": "DelimitedTextSink",
+											"storeSettings": {
+												"type": "AzureBlobFSWriteSettings"
+											},
+											"formatSettings": {
+												"type": "DelimitedTextWriteSettings",
+												"quoteAllText": true,
+												"fileExtension": ".txt"
+											}
+										},
+										"enableStaging": false,
+										"translator": {
+											"type": "TabularTranslator",
+											"typeConversion": true,
+											"typeConversionSettings": {
+												"allowDataTruncation": true,
+												"treatBooleanAsNumber": false
+											}
+										}
+									},
+									"inputs": [
+										{
+											"referenceName": "AzureSqlTable_ernesto",
+											"type": "DatasetReference",
+											"parameters": {}
+										}
+									],
+									"outputs": [
+										{
+											"referenceName": "AW_csv",
+											"type": "DatasetReference",
+											"parameters": {
+												"container": {
+													"value": "@pipeline().parameters.container",
+													"type": "Expression"
+												},
+												"folder_name": {
+													"value": "@concat(pipeline().parameters.folder_name, utcNow('dd-MM-yy'))",
+													"type": "Expression"
+												},
+												"file_name": {
+													"value": "@concat(item().TABLE_NAME, '.csv')",
+													"type": "Expression"
+												}
+											}
+										}
+									]
+								}
+							]
+						}
+					},
+					{
+						"name": "Iterate_Raw_to_trusted",
+						"type": "ForEach",
+						"dependsOn": [
+							{
+								"activity": "IterateSQLTables",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"items": {
+								"value": "@pipeline().parameters.tableList",
+								"type": "Expression"
+							},
+							"activities": [
+								{
+									"name": "Raw_to_trustedAW",
+									"type": "DatabricksNotebook",
+									"dependsOn": [],
+									"policy": {
+										"timeout": "0.12:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"notebookPath": "/Users/edavogusttop@gmail.com/AdventureWorks/raw_to_trustedAW",
+										"baseParameters": {
+											"file_name": {
+												"value": "@item().TABLE_NAME",
+												"type": "Expression"
+											},
+											"folder_name": {
+												"value": "@pipeline().parameters.folder_name",
+												"type": "Expression"
+											},
+											"date": {
+												"value": "@utcNow('dd-MM-yy')",
+												"type": "Expression"
+											}
+										}
+									},
+									"linkedServiceName": {
+										"referenceName": "AzureDatabricks_ernestodavogustto",
+										"type": "LinkedServiceReference"
+									}
+								}
+							]
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"parameters": {
+					"tableList": {
+						"type": "array"
+					},
+					"container": {
+						"type": "string",
+						"defaultValue": "ernestodavogustto"
+					},
+					"folder_name": {
+						"type": "string",
+						"defaultValue": "AdventureWorks/raw_data/"
+					}
+				},
+				"folder": {
+					"name": "ernestodavogustto/Ingesta_AdventureWorks"
+				},
+				"annotations": [],
+				"lastPublishTime": "2023-05-16T14:44:51Z"
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/pl_AdventureWorks_lookup')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "ForEach 1",
+						"type": "ForEach",
+						"dependsOn": [
+							{
+								"activity": "Lookup juli",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"items": {
+								"value": "@activity('Lookup juli').output.value",
+								"type": "Expression"
+							},
+							"isSequential": true,
+							"activities": [
+								{
+									"name": "Copy_tablas_raw",
+									"type": "Copy",
+									"dependsOn": [],
+									"policy": {
+										"timeout": "0.12:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"source": {
+											"type": "AzureSqlSource",
+											"queryTimeout": "02:00:00",
+											"partitionOption": "None"
+										},
+										"sink": {
+											"type": "DelimitedTextSink",
+											"storeSettings": {
+												"type": "AzureBlobFSWriteSettings"
+											},
+											"formatSettings": {
+												"type": "DelimitedTextWriteSettings",
+												"quoteAllText": true,
+												"fileExtension": ".txt"
+											}
+										},
+										"enableStaging": false,
+										"translator": {
+											"type": "TabularTranslator",
+											"typeConversion": true,
+											"typeConversionSettings": {
+												"allowDataTruncation": true,
+												"treatBooleanAsNumber": false
+											}
+										}
+									},
+									"inputs": [
+										{
+											"referenceName": "AdventureWorksJuli",
+											"type": "DatasetReference",
+											"parameters": {
+												"nombretabla": {
+													"value": "@item().TABLE_NAME",
+													"type": "Expression"
+												}
+											}
+										}
+									],
+									"outputs": [
+										{
+											"referenceName": "AdventureWorks_csv_juli",
+											"type": "DatasetReference",
+											"parameters": {
+												"nombrearchivo": {
+													"value": "@item().TABLE_NAME",
+													"type": "Expression"
+												}
+											}
+										}
+									]
+								}
+							]
+						}
+					},
+					{
+						"name": "Lookup juli",
+						"type": "Lookup",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": "SELECT TABLE_SCHEMA, TABLE_NAME FROM Information_Schema.Tables\nWHERE TABLE_SCHEMA != 'dbo' AND TABLE_TYPE = 'BASE TABLE'",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"dataset": {
+								"referenceName": "AdventureWorksJuli",
+								"type": "DatasetReference",
+								"parameters": {
+									"nombretabla": "1"
+								}
+							},
+							"firstRowOnly": false
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"folder": {
+					"name": "juliancohen"
+				},
+				"annotations": [],
+				"lastPublishTime": "2023-05-16T14:59:49Z"
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/pl_AdventureWorks_var')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "ForEach 1",
+						"type": "ForEach",
+						"dependsOn": [],
+						"userProperties": [],
+						"typeProperties": {
+							"items": {
+								"value": "@variables('TABLE_NAME')",
+								"type": "Expression"
+							},
+							"isSequential": true,
+							"activities": [
+								{
+									"name": "Copy_tablas_raw",
+									"type": "Copy",
+									"dependsOn": [],
+									"policy": {
+										"timeout": "0.12:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"source": {
+											"type": "AzureSqlSource",
+											"queryTimeout": "02:00:00",
+											"partitionOption": "None"
+										},
+										"sink": {
+											"type": "DelimitedTextSink",
+											"storeSettings": {
+												"type": "AzureBlobFSWriteSettings"
+											},
+											"formatSettings": {
+												"type": "DelimitedTextWriteSettings",
+												"quoteAllText": true,
+												"fileExtension": ".txt"
+											}
+										},
+										"enableStaging": false,
+										"translator": {
+											"type": "TabularTranslator",
+											"typeConversion": true,
+											"typeConversionSettings": {
+												"allowDataTruncation": true,
+												"treatBooleanAsNumber": false
+											}
+										}
+									},
+									"inputs": [
+										{
+											"referenceName": "AdventureWorksJuli",
+											"type": "DatasetReference",
+											"parameters": {
+												"nombretabla": {
+													"value": "@item()",
+													"type": "Expression"
+												}
+											}
+										}
+									],
+									"outputs": [
+										{
+											"referenceName": "AdventureWorks_csv_juli",
+											"type": "DatasetReference",
+											"parameters": {
+												"nombrearchivo": {
+													"value": "@item()",
+													"type": "Expression"
+												}
+											}
+										}
+									]
+								}
+							]
+						}
+					},
+					{
+						"name": "RAW_TO_TRUSTED",
+						"type": "DatabricksNotebook",
+						"dependsOn": [
+							{
+								"activity": "ForEach 1",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"notebookPath": "/Users/cohenjulian1@gmail.com/AdventureWorks/Raw to Trusted Adventure Works (CON LIMPIEZA)"
+						},
+						"linkedServiceName": {
+							"referenceName": "AzureDatabricksJulian",
+							"type": "LinkedServiceReference"
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"variables": {
+					"TABLE_NAME": {
+						"type": "Array",
+						"defaultValue": [
+							"Product",
+							"ProductCategory",
+							"ProductModel",
+							"ProductModelProductDescription",
+							"ProductDescription",
+							"SalesOrderDetail",
+							"SalesOrderHeader",
+							"Address",
+							"Customer",
+							"CustomerAddres"
+						]
+					}
+				},
+				"folder": {
+					"name": "juliancohen"
+				},
+				"annotations": [],
+				"lastPublishTime": "2023-05-16T00:44:07Z"
+			},
+			"dependsOn": []
+		}
+	]
+}

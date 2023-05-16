@@ -1,0 +1,681 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "adf-formacion-analitica"
+		},
+		"AdvWorksDB_Conection_jg_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AdvWorksDB_Conection_jg'"
+		},
+		"AzureDataLakeStorage1_Juan_Caceffo_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'AzureDataLakeStorage1_Juan_Caceffo'"
+		},
+		"AzureDataLakeStorage1_maria_sol_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'AzureDataLakeStorage1_maria_sol'"
+		},
+		"AzureDataLakeStorage1_nicolas_fernandez_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'AzureDataLakeStorage1_nicolas_fernandez'"
+		},
+		"AzureDataLakeStorage_Azul_Selser_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'AzureDataLakeStorage_Azul_Selser'"
+		},
+		"AzureDatabricks1_accessToken": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accessToken' of 'AzureDatabricks1'"
+		},
+		"AzureDatabricksCamila_accessToken": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accessToken' of 'AzureDatabricksCamila'"
+		},
+		"AzureDatabricksJulian_accessToken": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accessToken' of 'AzureDatabricksJulian'"
+		},
+		"AzureDatabricksMelina_ForEach_accessToken": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accessToken' of 'AzureDatabricksMelina_ForEach'"
+		},
+		"AzureDatabricksSuarez_accessToken": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accessToken' of 'AzureDatabricksSuarez'"
+		},
+		"AzureDatabricks_Azul_Selser_accessToken": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accessToken' of 'AzureDatabricks_Azul_Selser'"
+		},
+		"AzureDatabricks_JuanMaidana_accessToken": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accessToken' of 'AzureDatabricks_JuanMaidana'"
+		},
+		"AzureDatabricks_Juan_Caceffo_accessToken": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accessToken' of 'AzureDatabricks_Juan_Caceffo'"
+		},
+		"AzureDatabricks_Melina_accessToken": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accessToken' of 'AzureDatabricks_Melina'"
+		},
+		"AzureDatabricks_NicoFernandez_accessToken": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accessToken' of 'AzureDatabricks_NicoFernandez'"
+		},
+		"AzureDatabricks_demo_accessToken": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accessToken' of 'AzureDatabricks_demo'"
+		},
+		"AzureDatabricks_ernestodavogustto_accessToken": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accessToken' of 'AzureDatabricks_ernestodavogustto'"
+		},
+		"AzureDatabricks_mariasolserritelli_accessToken": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accessToken' of 'AzureDatabricks_mariasolserritelli'"
+		},
+		"AzureSqlDatabase2_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureSqlDatabase2'"
+		},
+		"AzureSqlDatabase3_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureSqlDatabase3'"
+		},
+		"AzureSqlDatabaseCamila_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureSqlDatabaseCamila'"
+		},
+		"AzureSqlDatabaseJuli_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureSqlDatabaseJuli'"
+		},
+		"AzureSqlDatabaseMelinasv_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureSqlDatabaseMelinasv'"
+		},
+		"AzureSqlDatabaseSuarez_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureSqlDatabaseSuarez'"
+		},
+		"AzureSqlDatabase_Azul_Selser_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureSqlDatabase_Azul_Selser'"
+		},
+		"AzureSqlDatabase_Foglia_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureSqlDatabase_Foglia'"
+		},
+		"AzureSqlDatabase_JuanMaidana_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureSqlDatabase_JuanMaidana'"
+		},
+		"AzureSqlDatabase_Juan_Caceffo_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureSqlDatabase_Juan_Caceffo'"
+		},
+		"AzureSqlDatabase_demo_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureSqlDatabase_demo'"
+		},
+		"AzureSqlDatabase_ernesto_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureSqlDatabase_ernesto'"
+		},
+		"AzureSqlDatabase_mariasol_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureSqlDatabase_mariasol'"
+		},
+		"AzureSqlDatabase_nico_fernandez_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureSqlDatabase_nico_fernandez'"
+		},
+		"adventure_works_raw_trusted_accessToken": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accessToken' of 'adventure_works_raw_trusted'"
+		},
+		"adw_jg_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'adw_jg'"
+		},
+		"datalakeformacion1_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'datalakeformacion1'"
+		},
+		"datalakeformacion2_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'datalakeformacion2'"
+		},
+		"AzureDataLakeStorage1_Juan_Caceffo_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://datalakeformacion1.dfs.core.windows.net/"
+		},
+		"AzureDataLakeStorage1_maria_sol_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://datalakeformacion1.dfs.core.windows.net/"
+		},
+		"AzureDataLakeStorage1_nicolas_fernandez_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://datalakeformacion1.dfs.core.windows.net/"
+		},
+		"AzureDataLakeStorage_Azul_Selser_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://datalakeformacion1.dfs.core.windows.net/"
+		},
+		"AzureDatabricks1_properties_typeProperties_existingClusterId": {
+			"type": "string",
+			"defaultValue": "0421-153733-9jgxl1pc"
+		},
+		"AzureDatabricksCamila_properties_typeProperties_existingClusterId": {
+			"type": "string",
+			"defaultValue": "0421-153733-9jgxl1pc"
+		},
+		"AzureDatabricksJulian_properties_typeProperties_existingClusterId": {
+			"type": "string",
+			"defaultValue": "0421-153733-9jgxl1pc"
+		},
+		"AzureDatabricksMelina_ForEach_properties_typeProperties_existingClusterId": {
+			"type": "string",
+			"defaultValue": "0421-153733-9jgxl1pc"
+		},
+		"AzureDatabricksSuarez_properties_typeProperties_existingClusterId": {
+			"type": "string",
+			"defaultValue": "0421-153733-9jgxl1pc"
+		},
+		"AzureDatabricks_Azul_Selser_properties_typeProperties_existingClusterId": {
+			"type": "string",
+			"defaultValue": "0421-153733-9jgxl1pc"
+		},
+		"AzureDatabricks_JuanMaidana_properties_typeProperties_existingClusterId": {
+			"type": "string",
+			"defaultValue": "0421-153733-9jgxl1pc"
+		},
+		"AzureDatabricks_Juan_Caceffo_properties_typeProperties_existingClusterId": {
+			"type": "string",
+			"defaultValue": "0421-153733-9jgxl1pc"
+		},
+		"AzureDatabricks_Melina_properties_typeProperties_existingClusterId": {
+			"type": "string",
+			"defaultValue": "0421-153733-9jgxl1pc"
+		},
+		"AzureDatabricks_NicoFernandez_properties_typeProperties_existingClusterId": {
+			"type": "string",
+			"defaultValue": "0421-153733-9jgxl1pc"
+		},
+		"AzureDatabricks_demo_properties_typeProperties_existingClusterId": {
+			"type": "string",
+			"defaultValue": "0421-153733-9jgxl1pc"
+		},
+		"AzureDatabricks_ernestodavogustto_properties_typeProperties_existingClusterId": {
+			"type": "string",
+			"defaultValue": "0421-153733-9jgxl1pc"
+		},
+		"AzureDatabricks_mariasolserritelli_properties_typeProperties_existingClusterId": {
+			"type": "string",
+			"defaultValue": "0421-153733-9jgxl1pc"
+		},
+		"adventure_works_raw_trusted_properties_typeProperties_existingClusterId": {
+			"type": "string",
+			"defaultValue": "0421-153733-9jgxl1pc"
+		},
+		"datalakeformacion1_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://datalakeformacion1.dfs.core.windows.net/"
+		},
+		"datalakeformacion2_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://datalakeformacion2.dfs.core.windows.net/"
+		},
+		"neymarSucio_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://raw.githubusercontent.com/PPereyraAN/Cursos/main/"
+		},
+		"containerUri": {
+			"type": "string",
+			"metadata": "URI to storage account containing linked ARM templates"
+		},
+		"containerSasToken": {
+			"type": "string",
+			"metadata": "Sas token to storage account containing linked ARM templates"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "adf-formacion-analitica_ArmTemplate_0",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_0.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					},
+					"AdvWorksDB_Conection_jg_connectionString": {
+						"value": "[parameters('AdvWorksDB_Conection_jg_connectionString')]"
+					},
+					"AzureDataLakeStorage1_Juan_Caceffo_accountKey": {
+						"value": "[parameters('AzureDataLakeStorage1_Juan_Caceffo_accountKey')]"
+					},
+					"AzureDataLakeStorage1_maria_sol_accountKey": {
+						"value": "[parameters('AzureDataLakeStorage1_maria_sol_accountKey')]"
+					},
+					"AzureDataLakeStorage1_nicolas_fernandez_accountKey": {
+						"value": "[parameters('AzureDataLakeStorage1_nicolas_fernandez_accountKey')]"
+					},
+					"AzureDataLakeStorage_Azul_Selser_accountKey": {
+						"value": "[parameters('AzureDataLakeStorage_Azul_Selser_accountKey')]"
+					},
+					"AzureDatabricks1_accessToken": {
+						"value": "[parameters('AzureDatabricks1_accessToken')]"
+					},
+					"AzureDatabricksCamila_accessToken": {
+						"value": "[parameters('AzureDatabricksCamila_accessToken')]"
+					},
+					"AzureDatabricksJulian_accessToken": {
+						"value": "[parameters('AzureDatabricksJulian_accessToken')]"
+					},
+					"AzureDatabricksMelina_ForEach_accessToken": {
+						"value": "[parameters('AzureDatabricksMelina_ForEach_accessToken')]"
+					},
+					"AzureDatabricksSuarez_accessToken": {
+						"value": "[parameters('AzureDatabricksSuarez_accessToken')]"
+					},
+					"AzureDatabricks_Azul_Selser_accessToken": {
+						"value": "[parameters('AzureDatabricks_Azul_Selser_accessToken')]"
+					},
+					"AzureDatabricks_JuanMaidana_accessToken": {
+						"value": "[parameters('AzureDatabricks_JuanMaidana_accessToken')]"
+					},
+					"AzureDatabricks_Juan_Caceffo_accessToken": {
+						"value": "[parameters('AzureDatabricks_Juan_Caceffo_accessToken')]"
+					},
+					"AzureDatabricks_Melina_accessToken": {
+						"value": "[parameters('AzureDatabricks_Melina_accessToken')]"
+					},
+					"AzureDatabricks_NicoFernandez_accessToken": {
+						"value": "[parameters('AzureDatabricks_NicoFernandez_accessToken')]"
+					},
+					"AzureDatabricks_demo_accessToken": {
+						"value": "[parameters('AzureDatabricks_demo_accessToken')]"
+					},
+					"AzureDatabricks_ernestodavogustto_accessToken": {
+						"value": "[parameters('AzureDatabricks_ernestodavogustto_accessToken')]"
+					},
+					"AzureDatabricks_mariasolserritelli_accessToken": {
+						"value": "[parameters('AzureDatabricks_mariasolserritelli_accessToken')]"
+					},
+					"AzureSqlDatabase2_connectionString": {
+						"value": "[parameters('AzureSqlDatabase2_connectionString')]"
+					},
+					"AzureSqlDatabase3_connectionString": {
+						"value": "[parameters('AzureSqlDatabase3_connectionString')]"
+					},
+					"AzureDataLakeStorage1_Juan_Caceffo_properties_typeProperties_url": {
+						"value": "[parameters('AzureDataLakeStorage1_Juan_Caceffo_properties_typeProperties_url')]"
+					},
+					"AzureDataLakeStorage1_maria_sol_properties_typeProperties_url": {
+						"value": "[parameters('AzureDataLakeStorage1_maria_sol_properties_typeProperties_url')]"
+					},
+					"AzureDataLakeStorage1_nicolas_fernandez_properties_typeProperties_url": {
+						"value": "[parameters('AzureDataLakeStorage1_nicolas_fernandez_properties_typeProperties_url')]"
+					},
+					"AzureDataLakeStorage_Azul_Selser_properties_typeProperties_url": {
+						"value": "[parameters('AzureDataLakeStorage_Azul_Selser_properties_typeProperties_url')]"
+					},
+					"AzureDatabricks1_properties_typeProperties_existingClusterId": {
+						"value": "[parameters('AzureDatabricks1_properties_typeProperties_existingClusterId')]"
+					},
+					"AzureDatabricksCamila_properties_typeProperties_existingClusterId": {
+						"value": "[parameters('AzureDatabricksCamila_properties_typeProperties_existingClusterId')]"
+					},
+					"AzureDatabricksJulian_properties_typeProperties_existingClusterId": {
+						"value": "[parameters('AzureDatabricksJulian_properties_typeProperties_existingClusterId')]"
+					},
+					"AzureDatabricksMelina_ForEach_properties_typeProperties_existingClusterId": {
+						"value": "[parameters('AzureDatabricksMelina_ForEach_properties_typeProperties_existingClusterId')]"
+					},
+					"AzureDatabricksSuarez_properties_typeProperties_existingClusterId": {
+						"value": "[parameters('AzureDatabricksSuarez_properties_typeProperties_existingClusterId')]"
+					},
+					"AzureDatabricks_Azul_Selser_properties_typeProperties_existingClusterId": {
+						"value": "[parameters('AzureDatabricks_Azul_Selser_properties_typeProperties_existingClusterId')]"
+					},
+					"AzureDatabricks_JuanMaidana_properties_typeProperties_existingClusterId": {
+						"value": "[parameters('AzureDatabricks_JuanMaidana_properties_typeProperties_existingClusterId')]"
+					},
+					"AzureDatabricks_Juan_Caceffo_properties_typeProperties_existingClusterId": {
+						"value": "[parameters('AzureDatabricks_Juan_Caceffo_properties_typeProperties_existingClusterId')]"
+					},
+					"AzureDatabricks_Melina_properties_typeProperties_existingClusterId": {
+						"value": "[parameters('AzureDatabricks_Melina_properties_typeProperties_existingClusterId')]"
+					},
+					"AzureDatabricks_NicoFernandez_properties_typeProperties_existingClusterId": {
+						"value": "[parameters('AzureDatabricks_NicoFernandez_properties_typeProperties_existingClusterId')]"
+					},
+					"AzureDatabricks_demo_properties_typeProperties_existingClusterId": {
+						"value": "[parameters('AzureDatabricks_demo_properties_typeProperties_existingClusterId')]"
+					},
+					"AzureDatabricks_ernestodavogustto_properties_typeProperties_existingClusterId": {
+						"value": "[parameters('AzureDatabricks_ernestodavogustto_properties_typeProperties_existingClusterId')]"
+					},
+					"AzureDatabricks_mariasolserritelli_properties_typeProperties_existingClusterId": {
+						"value": "[parameters('AzureDatabricks_mariasolserritelli_properties_typeProperties_existingClusterId')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "adf-formacion-analitica_ArmTemplate_1",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_1.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					},
+					"AzureSqlDatabaseCamila_connectionString": {
+						"value": "[parameters('AzureSqlDatabaseCamila_connectionString')]"
+					},
+					"AzureSqlDatabaseJuli_connectionString": {
+						"value": "[parameters('AzureSqlDatabaseJuli_connectionString')]"
+					},
+					"AzureSqlDatabaseMelinasv_connectionString": {
+						"value": "[parameters('AzureSqlDatabaseMelinasv_connectionString')]"
+					},
+					"AzureSqlDatabaseSuarez_connectionString": {
+						"value": "[parameters('AzureSqlDatabaseSuarez_connectionString')]"
+					},
+					"AzureSqlDatabase_Azul_Selser_connectionString": {
+						"value": "[parameters('AzureSqlDatabase_Azul_Selser_connectionString')]"
+					},
+					"AzureSqlDatabase_Foglia_connectionString": {
+						"value": "[parameters('AzureSqlDatabase_Foglia_connectionString')]"
+					},
+					"AzureSqlDatabase_JuanMaidana_connectionString": {
+						"value": "[parameters('AzureSqlDatabase_JuanMaidana_connectionString')]"
+					},
+					"AzureSqlDatabase_Juan_Caceffo_connectionString": {
+						"value": "[parameters('AzureSqlDatabase_Juan_Caceffo_connectionString')]"
+					},
+					"AzureSqlDatabase_demo_connectionString": {
+						"value": "[parameters('AzureSqlDatabase_demo_connectionString')]"
+					},
+					"AzureSqlDatabase_ernesto_connectionString": {
+						"value": "[parameters('AzureSqlDatabase_ernesto_connectionString')]"
+					},
+					"AzureSqlDatabase_mariasol_connectionString": {
+						"value": "[parameters('AzureSqlDatabase_mariasol_connectionString')]"
+					},
+					"AzureSqlDatabase_nico_fernandez_connectionString": {
+						"value": "[parameters('AzureSqlDatabase_nico_fernandez_connectionString')]"
+					},
+					"adventure_works_raw_trusted_accessToken": {
+						"value": "[parameters('adventure_works_raw_trusted_accessToken')]"
+					},
+					"adw_jg_connectionString": {
+						"value": "[parameters('adw_jg_connectionString')]"
+					},
+					"datalakeformacion1_accountKey": {
+						"value": "[parameters('datalakeformacion1_accountKey')]"
+					},
+					"datalakeformacion2_accountKey": {
+						"value": "[parameters('datalakeformacion2_accountKey')]"
+					},
+					"adventure_works_raw_trusted_properties_typeProperties_existingClusterId": {
+						"value": "[parameters('adventure_works_raw_trusted_properties_typeProperties_existingClusterId')]"
+					},
+					"datalakeformacion1_properties_typeProperties_url": {
+						"value": "[parameters('datalakeformacion1_properties_typeProperties_url')]"
+					},
+					"datalakeformacion2_properties_typeProperties_url": {
+						"value": "[parameters('datalakeformacion2_properties_typeProperties_url')]"
+					},
+					"neymarSucio_properties_typeProperties_url": {
+						"value": "[parameters('neymarSucio_properties_typeProperties_url')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'adf-formacion-analitica_ArmTemplate_0')]"
+			]
+		},
+		{
+			"name": "adf-formacion-analitica_ArmTemplate_2",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_2.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'adf-formacion-analitica_ArmTemplate_1')]"
+			]
+		},
+		{
+			"name": "adf-formacion-analitica_ArmTemplate_3",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_3.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'adf-formacion-analitica_ArmTemplate_2')]"
+			]
+		},
+		{
+			"name": "adf-formacion-analitica_ArmTemplate_4",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_4.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'adf-formacion-analitica_ArmTemplate_3')]"
+			]
+		},
+		{
+			"name": "adf-formacion-analitica_ArmTemplate_5",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_5.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'adf-formacion-analitica_ArmTemplate_4')]"
+			]
+		},
+		{
+			"name": "adf-formacion-analitica_ArmTemplate_6",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_6.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'adf-formacion-analitica_ArmTemplate_5')]"
+			]
+		},
+		{
+			"name": "adf-formacion-analitica_ArmTemplate_7",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_7.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'adf-formacion-analitica_ArmTemplate_6')]"
+			]
+		},
+		{
+			"name": "adf-formacion-analitica_ArmTemplate_8",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_8.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'adf-formacion-analitica_ArmTemplate_7')]"
+			]
+		},
+		{
+			"name": "adf-formacion-analitica_ArmTemplate_9",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_9.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'adf-formacion-analitica_ArmTemplate_8')]"
+			]
+		},
+		{
+			"name": "adf-formacion-analitica_ArmTemplate_10",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_10.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'adf-formacion-analitica_ArmTemplate_9')]"
+			]
+		},
+		{
+			"name": "adf-formacion-analitica_ArmTemplate_11",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_11.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'adf-formacion-analitica_ArmTemplate_10')]"
+			]
+		},
+		{
+			"name": "adf-formacion-analitica_ArmTemplate_12",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_12.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'adf-formacion-analitica_ArmTemplate_11')]"
+			]
+		}
+	]
+}

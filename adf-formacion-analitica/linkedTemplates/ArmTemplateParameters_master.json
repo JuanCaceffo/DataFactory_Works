@@ -1,0 +1,186 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "adf-formacion-analitica"
+		},
+		"AdvWorksDB_Conection_jg_connectionString": {
+			"value": ""
+		},
+		"AzureDataLakeStorage1_Juan_Caceffo_accountKey": {
+			"value": ""
+		},
+		"AzureDataLakeStorage1_maria_sol_accountKey": {
+			"value": ""
+		},
+		"AzureDataLakeStorage1_nicolas_fernandez_accountKey": {
+			"value": ""
+		},
+		"AzureDataLakeStorage_Azul_Selser_accountKey": {
+			"value": ""
+		},
+		"AzureDatabricks1_accessToken": {
+			"value": ""
+		},
+		"AzureDatabricksCamila_accessToken": {
+			"value": ""
+		},
+		"AzureDatabricksJulian_accessToken": {
+			"value": ""
+		},
+		"AzureDatabricksMelina_ForEach_accessToken": {
+			"value": ""
+		},
+		"AzureDatabricksSuarez_accessToken": {
+			"value": ""
+		},
+		"AzureDatabricks_Azul_Selser_accessToken": {
+			"value": ""
+		},
+		"AzureDatabricks_JuanMaidana_accessToken": {
+			"value": ""
+		},
+		"AzureDatabricks_Juan_Caceffo_accessToken": {
+			"value": ""
+		},
+		"AzureDatabricks_Melina_accessToken": {
+			"value": ""
+		},
+		"AzureDatabricks_NicoFernandez_accessToken": {
+			"value": ""
+		},
+		"AzureDatabricks_demo_accessToken": {
+			"value": ""
+		},
+		"AzureDatabricks_ernestodavogustto_accessToken": {
+			"value": ""
+		},
+		"AzureDatabricks_mariasolserritelli_accessToken": {
+			"value": ""
+		},
+		"AzureSqlDatabase2_connectionString": {
+			"value": ""
+		},
+		"AzureSqlDatabase3_connectionString": {
+			"value": ""
+		},
+		"AzureSqlDatabaseCamila_connectionString": {
+			"value": ""
+		},
+		"AzureSqlDatabaseJuli_connectionString": {
+			"value": ""
+		},
+		"AzureSqlDatabaseMelinasv_connectionString": {
+			"value": ""
+		},
+		"AzureSqlDatabaseSuarez_connectionString": {
+			"value": ""
+		},
+		"AzureSqlDatabase_Azul_Selser_connectionString": {
+			"value": ""
+		},
+		"AzureSqlDatabase_Foglia_connectionString": {
+			"value": ""
+		},
+		"AzureSqlDatabase_JuanMaidana_connectionString": {
+			"value": ""
+		},
+		"AzureSqlDatabase_Juan_Caceffo_connectionString": {
+			"value": ""
+		},
+		"AzureSqlDatabase_demo_connectionString": {
+			"value": ""
+		},
+		"AzureSqlDatabase_ernesto_connectionString": {
+			"value": ""
+		},
+		"AzureSqlDatabase_mariasol_connectionString": {
+			"value": ""
+		},
+		"AzureSqlDatabase_nico_fernandez_connectionString": {
+			"value": ""
+		},
+		"adventure_works_raw_trusted_accessToken": {
+			"value": ""
+		},
+		"adw_jg_connectionString": {
+			"value": ""
+		},
+		"datalakeformacion1_accountKey": {
+			"value": ""
+		},
+		"datalakeformacion2_accountKey": {
+			"value": ""
+		},
+		"AzureDataLakeStorage1_Juan_Caceffo_properties_typeProperties_url": {
+			"value": "https://datalakeformacion1.dfs.core.windows.net/"
+		},
+		"AzureDataLakeStorage1_maria_sol_properties_typeProperties_url": {
+			"value": "https://datalakeformacion1.dfs.core.windows.net/"
+		},
+		"AzureDataLakeStorage1_nicolas_fernandez_properties_typeProperties_url": {
+			"value": "https://datalakeformacion1.dfs.core.windows.net/"
+		},
+		"AzureDataLakeStorage_Azul_Selser_properties_typeProperties_url": {
+			"value": "https://datalakeformacion1.dfs.core.windows.net/"
+		},
+		"AzureDatabricks1_properties_typeProperties_existingClusterId": {
+			"value": "0421-153733-9jgxl1pc"
+		},
+		"AzureDatabricksCamila_properties_typeProperties_existingClusterId": {
+			"value": "0421-153733-9jgxl1pc"
+		},
+		"AzureDatabricksJulian_properties_typeProperties_existingClusterId": {
+			"value": "0421-153733-9jgxl1pc"
+		},
+		"AzureDatabricksMelina_ForEach_properties_typeProperties_existingClusterId": {
+			"value": "0421-153733-9jgxl1pc"
+		},
+		"AzureDatabricksSuarez_properties_typeProperties_existingClusterId": {
+			"value": "0421-153733-9jgxl1pc"
+		},
+		"AzureDatabricks_Azul_Selser_properties_typeProperties_existingClusterId": {
+			"value": "0421-153733-9jgxl1pc"
+		},
+		"AzureDatabricks_JuanMaidana_properties_typeProperties_existingClusterId": {
+			"value": "0421-153733-9jgxl1pc"
+		},
+		"AzureDatabricks_Juan_Caceffo_properties_typeProperties_existingClusterId": {
+			"value": "0421-153733-9jgxl1pc"
+		},
+		"AzureDatabricks_Melina_properties_typeProperties_existingClusterId": {
+			"value": "0421-153733-9jgxl1pc"
+		},
+		"AzureDatabricks_NicoFernandez_properties_typeProperties_existingClusterId": {
+			"value": "0421-153733-9jgxl1pc"
+		},
+		"AzureDatabricks_demo_properties_typeProperties_existingClusterId": {
+			"value": "0421-153733-9jgxl1pc"
+		},
+		"AzureDatabricks_ernestodavogustto_properties_typeProperties_existingClusterId": {
+			"value": "0421-153733-9jgxl1pc"
+		},
+		"AzureDatabricks_mariasolserritelli_properties_typeProperties_existingClusterId": {
+			"value": "0421-153733-9jgxl1pc"
+		},
+		"adventure_works_raw_trusted_properties_typeProperties_existingClusterId": {
+			"value": "0421-153733-9jgxl1pc"
+		},
+		"datalakeformacion1_properties_typeProperties_url": {
+			"value": "https://datalakeformacion1.dfs.core.windows.net/"
+		},
+		"datalakeformacion2_properties_typeProperties_url": {
+			"value": "https://datalakeformacion2.dfs.core.windows.net/"
+		},
+		"neymarSucio_properties_typeProperties_url": {
+			"value": "https://raw.githubusercontent.com/PPereyraAN/Cursos/main/"
+		},
+		"containerUri": {
+			"value": ""
+		},
+		"containerSasToken": {
+			"value": ""
+		}
+	}
+}

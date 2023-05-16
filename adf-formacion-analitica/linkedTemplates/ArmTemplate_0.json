@@ -1,0 +1,507 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "adf-formacion-analitica"
+		},
+		"AdvWorksDB_Conection_jg_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AdvWorksDB_Conection_jg'"
+		},
+		"AzureDataLakeStorage1_Juan_Caceffo_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'AzureDataLakeStorage1_Juan_Caceffo'"
+		},
+		"AzureDataLakeStorage1_maria_sol_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'AzureDataLakeStorage1_maria_sol'"
+		},
+		"AzureDataLakeStorage1_nicolas_fernandez_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'AzureDataLakeStorage1_nicolas_fernandez'"
+		},
+		"AzureDataLakeStorage_Azul_Selser_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'AzureDataLakeStorage_Azul_Selser'"
+		},
+		"AzureDatabricks1_accessToken": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accessToken' of 'AzureDatabricks1'"
+		},
+		"AzureDatabricksCamila_accessToken": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accessToken' of 'AzureDatabricksCamila'"
+		},
+		"AzureDatabricksJulian_accessToken": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accessToken' of 'AzureDatabricksJulian'"
+		},
+		"AzureDatabricksMelina_ForEach_accessToken": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accessToken' of 'AzureDatabricksMelina_ForEach'"
+		},
+		"AzureDatabricksSuarez_accessToken": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accessToken' of 'AzureDatabricksSuarez'"
+		},
+		"AzureDatabricks_Azul_Selser_accessToken": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accessToken' of 'AzureDatabricks_Azul_Selser'"
+		},
+		"AzureDatabricks_JuanMaidana_accessToken": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accessToken' of 'AzureDatabricks_JuanMaidana'"
+		},
+		"AzureDatabricks_Juan_Caceffo_accessToken": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accessToken' of 'AzureDatabricks_Juan_Caceffo'"
+		},
+		"AzureDatabricks_Melina_accessToken": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accessToken' of 'AzureDatabricks_Melina'"
+		},
+		"AzureDatabricks_NicoFernandez_accessToken": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accessToken' of 'AzureDatabricks_NicoFernandez'"
+		},
+		"AzureDatabricks_demo_accessToken": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accessToken' of 'AzureDatabricks_demo'"
+		},
+		"AzureDatabricks_ernestodavogustto_accessToken": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accessToken' of 'AzureDatabricks_ernestodavogustto'"
+		},
+		"AzureDatabricks_mariasolserritelli_accessToken": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accessToken' of 'AzureDatabricks_mariasolserritelli'"
+		},
+		"AzureSqlDatabase2_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureSqlDatabase2'"
+		},
+		"AzureSqlDatabase3_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureSqlDatabase3'"
+		},
+		"AzureDataLakeStorage1_Juan_Caceffo_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://datalakeformacion1.dfs.core.windows.net/"
+		},
+		"AzureDataLakeStorage1_maria_sol_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://datalakeformacion1.dfs.core.windows.net/"
+		},
+		"AzureDataLakeStorage1_nicolas_fernandez_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://datalakeformacion1.dfs.core.windows.net/"
+		},
+		"AzureDataLakeStorage_Azul_Selser_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://datalakeformacion1.dfs.core.windows.net/"
+		},
+		"AzureDatabricks1_properties_typeProperties_existingClusterId": {
+			"type": "string",
+			"defaultValue": "0421-153733-9jgxl1pc"
+		},
+		"AzureDatabricksCamila_properties_typeProperties_existingClusterId": {
+			"type": "string",
+			"defaultValue": "0421-153733-9jgxl1pc"
+		},
+		"AzureDatabricksJulian_properties_typeProperties_existingClusterId": {
+			"type": "string",
+			"defaultValue": "0421-153733-9jgxl1pc"
+		},
+		"AzureDatabricksMelina_ForEach_properties_typeProperties_existingClusterId": {
+			"type": "string",
+			"defaultValue": "0421-153733-9jgxl1pc"
+		},
+		"AzureDatabricksSuarez_properties_typeProperties_existingClusterId": {
+			"type": "string",
+			"defaultValue": "0421-153733-9jgxl1pc"
+		},
+		"AzureDatabricks_Azul_Selser_properties_typeProperties_existingClusterId": {
+			"type": "string",
+			"defaultValue": "0421-153733-9jgxl1pc"
+		},
+		"AzureDatabricks_JuanMaidana_properties_typeProperties_existingClusterId": {
+			"type": "string",
+			"defaultValue": "0421-153733-9jgxl1pc"
+		},
+		"AzureDatabricks_Juan_Caceffo_properties_typeProperties_existingClusterId": {
+			"type": "string",
+			"defaultValue": "0421-153733-9jgxl1pc"
+		},
+		"AzureDatabricks_Melina_properties_typeProperties_existingClusterId": {
+			"type": "string",
+			"defaultValue": "0421-153733-9jgxl1pc"
+		},
+		"AzureDatabricks_NicoFernandez_properties_typeProperties_existingClusterId": {
+			"type": "string",
+			"defaultValue": "0421-153733-9jgxl1pc"
+		},
+		"AzureDatabricks_demo_properties_typeProperties_existingClusterId": {
+			"type": "string",
+			"defaultValue": "0421-153733-9jgxl1pc"
+		},
+		"AzureDatabricks_ernestodavogustto_properties_typeProperties_existingClusterId": {
+			"type": "string",
+			"defaultValue": "0421-153733-9jgxl1pc"
+		},
+		"AzureDatabricks_mariasolserritelli_properties_typeProperties_existingClusterId": {
+			"type": "string",
+			"defaultValue": "0421-153733-9jgxl1pc"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/AdvWorksDB_Conection_jg')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "Conexión con la base de datos AdventureWorks",
+				"annotations": [],
+				"type": "AzureSqlDatabase",
+				"typeProperties": {
+					"connectionString": "[parameters('AdvWorksDB_Conection_jg_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureDataLakeStorage1_Juan_Caceffo')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobFS",
+				"typeProperties": {
+					"url": "[parameters('AzureDataLakeStorage1_Juan_Caceffo_properties_typeProperties_url')]",
+					"accountKey": {
+						"type": "SecureString",
+						"value": "[parameters('AzureDataLakeStorage1_Juan_Caceffo_accountKey')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureDataLakeStorage1_maria_sol')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobFS",
+				"typeProperties": {
+					"url": "[parameters('AzureDataLakeStorage1_maria_sol_properties_typeProperties_url')]",
+					"accountKey": {
+						"type": "SecureString",
+						"value": "[parameters('AzureDataLakeStorage1_maria_sol_accountKey')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureDataLakeStorage1_nicolas_fernandez')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobFS",
+				"typeProperties": {
+					"url": "[parameters('AzureDataLakeStorage1_nicolas_fernandez_properties_typeProperties_url')]",
+					"accountKey": {
+						"type": "SecureString",
+						"value": "[parameters('AzureDataLakeStorage1_nicolas_fernandez_accountKey')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureDataLakeStorage_Azul_Selser')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "Conecta al DataLake",
+				"annotations": [],
+				"type": "AzureBlobFS",
+				"typeProperties": {
+					"url": "[parameters('AzureDataLakeStorage_Azul_Selser_properties_typeProperties_url')]",
+					"accountKey": {
+						"type": "SecureString",
+						"value": "[parameters('AzureDataLakeStorage_Azul_Selser_accountKey')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureDatabricks1')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureDatabricks",
+				"typeProperties": {
+					"domain": "https://adb-7919269051873691.11.azuredatabricks.net",
+					"accessToken": {
+						"type": "SecureString",
+						"value": "[parameters('AzureDatabricks1_accessToken')]"
+					},
+					"existingClusterId": "[parameters('AzureDatabricks1_properties_typeProperties_existingClusterId')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureDatabricksCamila')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureDatabricks",
+				"typeProperties": {
+					"domain": "https://adb-7919269051873691.11.azuredatabricks.net",
+					"accessToken": {
+						"type": "SecureString",
+						"value": "[parameters('AzureDatabricksCamila_accessToken')]"
+					},
+					"existingClusterId": "[parameters('AzureDatabricksCamila_properties_typeProperties_existingClusterId')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureDatabricksJulian')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureDatabricks",
+				"typeProperties": {
+					"domain": "https://adb-7919269051873691.11.azuredatabricks.net",
+					"accessToken": {
+						"type": "SecureString",
+						"value": "[parameters('AzureDatabricksJulian_accessToken')]"
+					},
+					"existingClusterId": "[parameters('AzureDatabricksJulian_properties_typeProperties_existingClusterId')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureDatabricksMelina_ForEach')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureDatabricks",
+				"typeProperties": {
+					"domain": "https://adb-7919269051873691.11.azuredatabricks.net",
+					"accessToken": {
+						"type": "SecureString",
+						"value": "[parameters('AzureDatabricksMelina_ForEach_accessToken')]"
+					},
+					"existingClusterId": "[parameters('AzureDatabricksMelina_ForEach_properties_typeProperties_existingClusterId')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureDatabricksSuarez')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureDatabricks",
+				"typeProperties": {
+					"domain": "https://adb-7919269051873691.11.azuredatabricks.net",
+					"accessToken": {
+						"type": "SecureString",
+						"value": "[parameters('AzureDatabricksSuarez_accessToken')]"
+					},
+					"existingClusterId": "[parameters('AzureDatabricksSuarez_properties_typeProperties_existingClusterId')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureDatabricks_Azul_Selser')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureDatabricks",
+				"typeProperties": {
+					"domain": "https://adb-7919269051873691.11.azuredatabricks.net",
+					"accessToken": {
+						"type": "SecureString",
+						"value": "[parameters('AzureDatabricks_Azul_Selser_accessToken')]"
+					},
+					"existingClusterId": "[parameters('AzureDatabricks_Azul_Selser_properties_typeProperties_existingClusterId')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureDatabricks_JuanMaidana')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureDatabricks",
+				"typeProperties": {
+					"domain": "https://adb-7919269051873691.11.azuredatabricks.net",
+					"accessToken": {
+						"type": "SecureString",
+						"value": "[parameters('AzureDatabricks_JuanMaidana_accessToken')]"
+					},
+					"existingClusterId": "[parameters('AzureDatabricks_JuanMaidana_properties_typeProperties_existingClusterId')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureDatabricks_Juan_Caceffo')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureDatabricks",
+				"typeProperties": {
+					"domain": "https://adb-7919269051873691.11.azuredatabricks.net",
+					"accessToken": {
+						"type": "SecureString",
+						"value": "[parameters('AzureDatabricks_Juan_Caceffo_accessToken')]"
+					},
+					"existingClusterId": "[parameters('AzureDatabricks_Juan_Caceffo_properties_typeProperties_existingClusterId')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureDatabricks_Melina')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureDatabricks",
+				"typeProperties": {
+					"domain": "https://adb-7919269051873691.11.azuredatabricks.net",
+					"accessToken": {
+						"type": "SecureString",
+						"value": "[parameters('AzureDatabricks_Melina_accessToken')]"
+					},
+					"existingClusterId": "[parameters('AzureDatabricks_Melina_properties_typeProperties_existingClusterId')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureDatabricks_NicoFernandez')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureDatabricks",
+				"typeProperties": {
+					"domain": "https://adb-7919269051873691.11.azuredatabricks.net",
+					"accessToken": {
+						"type": "SecureString",
+						"value": "[parameters('AzureDatabricks_NicoFernandez_accessToken')]"
+					},
+					"existingClusterId": "[parameters('AzureDatabricks_NicoFernandez_properties_typeProperties_existingClusterId')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureDatabricks_demo')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureDatabricks",
+				"typeProperties": {
+					"domain": "https://adb-7919269051873691.11.azuredatabricks.net",
+					"accessToken": {
+						"type": "SecureString",
+						"value": "[parameters('AzureDatabricks_demo_accessToken')]"
+					},
+					"existingClusterId": "[parameters('AzureDatabricks_demo_properties_typeProperties_existingClusterId')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureDatabricks_ernestodavogustto')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureDatabricks",
+				"typeProperties": {
+					"domain": "https://adb-7919269051873691.11.azuredatabricks.net",
+					"accessToken": {
+						"type": "SecureString",
+						"value": "[parameters('AzureDatabricks_ernestodavogustto_accessToken')]"
+					},
+					"existingClusterId": "[parameters('AzureDatabricks_ernestodavogustto_properties_typeProperties_existingClusterId')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureDatabricks_mariasolserritelli')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureDatabricks",
+				"typeProperties": {
+					"domain": "https://adb-7919269051873691.11.azuredatabricks.net",
+					"accessToken": {
+						"type": "SecureString",
+						"value": "[parameters('AzureDatabricks_mariasolserritelli_accessToken')]"
+					},
+					"existingClusterId": "[parameters('AzureDatabricks_mariasolserritelli_properties_typeProperties_existingClusterId')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureSqlDatabase2')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureSqlDatabase",
+				"typeProperties": {
+					"connectionString": "[parameters('AzureSqlDatabase2_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureSqlDatabase3')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureSqlDatabase",
+				"typeProperties": {
+					"connectionString": "[parameters('AzureSqlDatabase3_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		}
+	]
+}
