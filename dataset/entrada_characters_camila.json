@@ -1,0 +1,45 @@
+{
+	"name": "entrada_characters_camila",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "datalakeformacion1",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "Camila/simpsons/raw"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "simpsons_characters.csv",
+				"folderPath": "data_flow_practica/origen/simpsons",
+				"fileSystem": "camilagomez"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "id",
+				"type": "String"
+			},
+			{
+				"name": "name",
+				"type": "String"
+			},
+			{
+				"name": "normalized_name",
+				"type": "String"
+			},
+			{
+				"name": "gender",
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

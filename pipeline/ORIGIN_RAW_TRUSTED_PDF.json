@@ -1,0 +1,233 @@
+{
+	"name": "ORIGIN_RAW_TRUSTED_PDF",
+	"properties": {
+		"activities": [
+			{
+				"name": "ForEach_Origin_Raw",
+				"type": "ForEach",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@pipeline().parameters.table_names",
+						"type": "Expression"
+					},
+					"isSequential": false,
+					"activities": [
+						{
+							"name": "CD_SALESLT",
+							"type": "Copy",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "AzureSqlSource",
+									"sqlReaderQuery": {
+										"value": "SELECT * FROM [@{item().TABLE_SCHEMA}].[@{item().TABLE_NAME}]",
+										"type": "Expression"
+									},
+									"queryTimeout": "02:00:00",
+									"partitionOption": "None"
+								},
+								"sink": {
+									"type": "DelimitedTextSink",
+									"storeSettings": {
+										"type": "AzureBlobFSWriteSettings"
+									},
+									"formatSettings": {
+										"type": "DelimitedTextWriteSettings",
+										"quoteAllText": true,
+										"fileExtension": ".txt"
+									}
+								},
+								"enableStaging": false,
+								"translator": {
+									"type": "TabularTranslator",
+									"typeConversion": true,
+									"typeConversionSettings": {
+										"allowDataTruncation": true,
+										"treatBooleanAsNumber": false
+									}
+								}
+							},
+							"inputs": [
+								{
+									"referenceName": "Dataset_AdvWorks_PDF",
+									"type": "DatasetReference"
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "Dataset_RAW_to_CSV_PDF",
+									"type": "DatasetReference",
+									"parameters": {
+										"CONTAINER": {
+											"value": "@pipeline().parameters.output_container",
+											"type": "Expression"
+										},
+										"FOLDER": {
+											"value": "@concat(pipeline().parameters.folder_name_raw,'/',pipeline().parameters.proyect,'/',utcNow('yyyy'),'/',item().TABLE_NAME)",
+											"type": "Expression"
+										},
+										"FILE": {
+											"value": "@concat(item().TABLE_NAME,'_',utcNow('dd-MM-yyyy'),'.csv')\n",
+											"type": "Expression"
+										}
+									}
+								}
+							]
+						}
+					]
+				}
+			},
+			{
+				"name": "ForEach_raw_trusted",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "ForEach_Origin_Raw",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@pipeline().parameters.table_names",
+						"type": "Expression"
+					},
+					"isSequential": false,
+					"activities": [
+						{
+							"name": "RAW_TO_TRUSTED_DBricks",
+							"type": "DatabricksNotebook",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"notebookPath": "/Users/madescoces@gmail.com/adventureworks/raw_trusted_2023",
+								"baseParameters": {
+									"file_name": {
+										"value": "@item().TABLE_NAME",
+										"type": "Expression"
+									},
+									"year": {
+										"value": "@utcNow('yyyy')",
+										"type": "Expression"
+									},
+									"folder_raw": {
+										"value": "@pipeline().parameters.folder_name_raw",
+										"type": "Expression"
+									},
+									"folder_trusted": {
+										"value": "@pipeline().parameters.folder_name_trusted",
+										"type": "Expression"
+									},
+									"datalake": {
+										"value": "@pipeline().parameters.datalake",
+										"type": "Expression"
+									},
+									"proyect": {
+										"value": "@pipeline().parameters.proyect",
+										"type": "Expression"
+									},
+									"container": {
+										"value": "@pipeline().parameters.output_container",
+										"type": "Expression"
+									},
+									"separator": {
+										"value": "@pipeline().parameters.separator",
+										"type": "Expression"
+									},
+									"date": {
+										"value": "@utcNow('dd-MM-yyyy')",
+										"type": "Expression"
+									}
+								}
+							},
+							"linkedServiceName": {
+								"referenceName": "adventure_works_raw_trusted",
+								"type": "LinkedServiceReference"
+							}
+						}
+					]
+				}
+			},
+			{
+				"name": "Launch_Refined",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "ForEach_raw_trusted",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "TRUSTED_TO_REFINED_PDF",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"table_names": {
+							"value": "@pipeline().parameters.table_names",
+							"type": "Expression"
+						}
+					}
+				}
+			}
+		],
+		"parameters": {
+			"output_container": {
+				"type": "string",
+				"defaultValue": "pablofoglia"
+			},
+			"folder_name_raw": {
+				"type": "string",
+				"defaultValue": "raw_data"
+			},
+			"folder_name_trusted": {
+				"type": "string",
+				"defaultValue": "trusted_data"
+			},
+			"datalake": {
+				"type": "string",
+				"defaultValue": "datalakeformacion1"
+			},
+			"proyect": {
+				"type": "string",
+				"defaultValue": "advworks"
+			},
+			"separator": {
+				"type": "string",
+				"defaultValue": "|"
+			},
+			"table_names": {
+				"type": "array"
+			}
+		},
+		"folder": {
+			"name": "pablo_foglia/AdventureWorks"
+		},
+		"annotations": [],
+		"lastPublishTime": "2023-05-16T00:37:13Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

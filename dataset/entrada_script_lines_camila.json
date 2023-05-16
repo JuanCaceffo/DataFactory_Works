@@ -1,0 +1,81 @@
+{
+	"name": "entrada_script_lines_camila",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "datalakeformacion1",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "Camila/simpsons/raw"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "simpsons_script_lines.csv",
+				"folderPath": "data_flow_practica/origen/simpsons",
+				"fileSystem": "camilagomez"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "id",
+				"type": "String"
+			},
+			{
+				"name": "episode_id",
+				"type": "String"
+			},
+			{
+				"name": "number",
+				"type": "String"
+			},
+			{
+				"name": "raw_text",
+				"type": "String"
+			},
+			{
+				"name": "timestamp_in_ms",
+				"type": "String"
+			},
+			{
+				"name": "speaking_line",
+				"type": "String"
+			},
+			{
+				"name": "character_id",
+				"type": "String"
+			},
+			{
+				"name": "location_id",
+				"type": "String"
+			},
+			{
+				"name": "raw_character_text",
+				"type": "String"
+			},
+			{
+				"name": "raw_location_text",
+				"type": "String"
+			},
+			{
+				"name": "spoken_words",
+				"type": "String"
+			},
+			{
+				"name": "normalized_text",
+				"type": "String"
+			},
+			{
+				"name": "word_count",
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

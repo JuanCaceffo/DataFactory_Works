@@ -1,0 +1,25 @@
+{
+	"name": "AdventureWorksJuli",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabaseJuli",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"nombretabla": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "SalesLT",
+			"table": {
+				"value": "@dataset().nombretabla",
+				"type": "Expression"
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

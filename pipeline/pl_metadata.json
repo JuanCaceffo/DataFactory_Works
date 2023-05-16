@@ -1,0 +1,94 @@
+{
+	"name": "pl_metadata",
+	"properties": {
+		"description": "para extraer los nombres de las carpetas del blob de azure",
+		"activities": [
+			{
+				"name": "Get Metadata1",
+				"description": "esto nos a la lista de todos los nombres",
+				"type": "GetMetadata",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataset": {
+						"referenceName": "prueba_Metadata_Azul_Selser",
+						"type": "DatasetReference"
+					},
+					"fieldList": [
+						"childItems"
+					],
+					"storeSettings": {
+						"type": "AzureBlobFSReadSettings",
+						"recursive": true,
+						"enablePartitionDiscovery": false
+					},
+					"formatSettings": {
+						"type": "ParquetReadSettings"
+					}
+				}
+			},
+			{
+				"name": "ForEach1",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "Get Metadata1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('Get Metadata1').output.value",
+						"type": "Expression"
+					},
+					"isSequential": true,
+					"activities": [
+						{
+							"name": "limpieza y exporta en parquet",
+							"description": "-elimina registros all null\n-elimina registros duplicados\n-elimina columnas 5% null\n-guarda en formato parquet",
+							"type": "DatabricksNotebook",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"notebookPath": "/Users/azulselser@gmail.com/ADF: Conexión al datalake_Azul_Selser",
+								"baseParameters": {
+									"file_name": {
+										"value": "@item().TABLE_NAME ",
+										"type": "Expression"
+									}
+								}
+							},
+							"linkedServiceName": {
+								"referenceName": "AzureDatabricks_Azul_Selser",
+								"type": "LinkedServiceReference"
+							}
+						}
+					]
+				}
+			}
+		],
+		"folder": {
+			"name": "Azul_Selser/tarea_15.05/Demos"
+		},
+		"annotations": [],
+		"lastPublishTime": "2023-05-15T03:40:19Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

@@ -1,0 +1,48 @@
+{
+	"name": "metadata_prueba",
+	"properties": {
+		"activities": [
+			{
+				"name": "Get Metadata1",
+				"type": "GetMetadata",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataset": {
+						"referenceName": "file_csv_melina",
+						"type": "DatasetReference",
+						"parameters": {
+							"contenedor": "melinayanguas",
+							"carpeta": "adventureWorks/rawdata",
+							"archivo": "Product.csv"
+						}
+					},
+					"fieldList": [
+						"structure"
+					],
+					"storeSettings": {
+						"type": "AzureBlobFSReadSettings",
+						"recursive": true,
+						"enablePartitionDiscovery": false
+					},
+					"formatSettings": {
+						"type": "DelimitedTextReadSettings"
+					}
+				}
+			}
+		],
+		"folder": {
+			"name": "melina-yanguas"
+		},
+		"annotations": [],
+		"lastPublishTime": "2023-05-16T04:58:02Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

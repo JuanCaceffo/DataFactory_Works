@@ -1,0 +1,39 @@
+{
+	"name": "csv_1_salida_demo_1",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "datalakeformacion1",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"file_name": {
+				"type": "string"
+			}
+		},
+		"folder": {
+			"name": "demo"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": {
+					"value": "@concat(dataset().file_name,'_',utcnow('dd-MM-yyyy'),'.csv')",
+					"type": "Expression"
+				},
+				"folderPath": {
+					"value": "@concat('raw-data/',utcnow('yyyy'))",
+					"type": "Expression"
+				},
+				"fileSystem": "demo-adf"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

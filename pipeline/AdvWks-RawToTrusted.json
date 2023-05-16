@@ -1,0 +1,64 @@
+{
+	"name": "AdvWks-RawToTrusted",
+	"properties": {
+		"description": "Procesamiento de tablas en databricks y guardado de etapa trusted en parquet",
+		"activities": [
+			{
+				"name": "ForEachTabla",
+				"type": "ForEach",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@pipeline().parameters.Lista_tablas",
+						"type": "Expression"
+					},
+					"isSequential": true,
+					"activities": [
+						{
+							"name": "AdventureWorks-RawToTrusted",
+							"type": "DatabricksNotebook",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"notebookPath": "/Users/cbgomez8069@gmail.com/AdventureWorks-RawToTrusted",
+								"baseParameters": {
+									"file_name": {
+										"value": "@item().TABLE_NAME",
+										"type": "Expression"
+									},
+									"file_date": {
+										"value": "@utcNow('dd-MM-yyyy')",
+										"type": "Expression"
+									}
+								}
+							},
+							"linkedServiceName": {
+								"referenceName": "AzureDatabricksCamila",
+								"type": "LinkedServiceReference"
+							}
+						}
+					]
+				}
+			}
+		],
+		"parameters": {
+			"lista_tablas": {
+				"type": "array"
+			}
+		},
+		"folder": {
+			"name": "Camila-Gomez/AdventureWorks"
+		},
+		"annotations": [],
+		"lastPublishTime": "2023-05-15T20:42:39Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

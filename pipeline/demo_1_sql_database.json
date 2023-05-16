@@ -1,0 +1,79 @@
+{
+	"name": "demo_1_sql_database",
+	"properties": {
+		"activities": [
+			{
+				"name": "Pasaje de SQL Database a Datalake",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"sink": {
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "sql_1_entrada_demo_1",
+						"type": "DatasetReference",
+						"parameters": {
+							"table_name": {
+								"value": "characters",
+								"type": "Expression"
+							}
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "csv_1_salida_demo_1",
+						"type": "DatasetReference",
+						"parameters": {
+							"file_name": "characters"
+						}
+					}
+				]
+			}
+		],
+		"variables": {
+			"lista_archivos": {
+				"type": "Array"
+			}
+		},
+		"folder": {
+			"name": "demo/SQL Database"
+		},
+		"annotations": [],
+		"lastPublishTime": "2023-05-12T16:20:24Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

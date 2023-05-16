@@ -1,0 +1,46 @@
+{
+	"name": "Data Factory 2 y 3 - Ejecucion",
+	"properties": {
+		"activities": [
+			{
+				"name": "Execute DF2",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "Data Factory 2 - Tarea",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "Execute DF3",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "Execute DF2",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "Data Factory 3 - Tarea",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			}
+		],
+		"folder": {
+			"name": "josegerstner"
+		},
+		"annotations": [],
+		"lastPublishTime": "2023-05-14T23:07:03Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

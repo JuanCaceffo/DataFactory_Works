@@ -1,0 +1,153 @@
+{
+	"name": "pipelincito_suarez",
+	"properties": {
+		"activities": [
+			{
+				"name": "ForEach_database",
+				"type": "ForEach",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@createArray('Product','ProductCategory','ProductModel','ProductModelProductDescription','SalesOrderDetail','CustomerAddress','Address','SalesOrderHeader','Customer')",
+						"type": "Expression"
+					},
+					"activities": [
+						{
+							"name": "Copy data to raw_data",
+							"type": "Copy",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "AzureSqlSource",
+									"queryTimeout": "02:00:00",
+									"partitionOption": "None"
+								},
+								"sink": {
+									"type": "DelimitedTextSink",
+									"storeSettings": {
+										"type": "AzureBlobFSWriteSettings"
+									},
+									"formatSettings": {
+										"type": "DelimitedTextWriteSettings",
+										"quoteAllText": true,
+										"fileExtension": ".csv"
+									}
+								},
+								"enableStaging": false,
+								"translator": {
+									"type": "TabularTranslator",
+									"typeConversion": true,
+									"typeConversionSettings": {
+										"allowDataTruncation": true,
+										"treatBooleanAsNumber": false
+									}
+								}
+							},
+							"inputs": [
+								{
+									"referenceName": "AzureSqlTableSuarez",
+									"type": "DatasetReference",
+									"parameters": {
+										"schemaname": "SalesLT",
+										"tablename": {
+											"value": "@item()",
+											"type": "Expression"
+										},
+										"databasename": "AdventureWorks"
+									}
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "to_csv_suarez",
+									"type": "DatasetReference",
+									"parameters": {
+										"container": "suareznicolas",
+										"carpeta": {
+											"value": "@concat('raw_data/AdventureWorks/',utcNow('yyyy'),'/',utcNow('dd-MM-yyyy'))",
+											"type": "Expression"
+										},
+										"archivo": {
+											"value": "@item()",
+											"type": "Expression"
+										}
+									}
+								}
+							]
+						}
+					]
+				}
+			},
+			{
+				"name": "ForEach_databricks",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "ForEach_database",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@createArray('Product','ProductCategory','ProductModel','ProductModelProductDescription','SalesOrderDetail','CustomerAddress','Address','SalesOrderHeader','Customer')",
+						"type": "Expression"
+					},
+					"activities": [
+						{
+							"name": "Notebook_AdventureWorks_suarez",
+							"type": "DatabricksNotebook",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"notebookPath": "/Users/suareznicolas20@gmail.com/ADF: Conexión al datalake desde ADF",
+								"baseParameters": {
+									"file_name": {
+										"value": "@item()",
+										"type": "Expression"
+									},
+									"year": {
+										"value": "@utcNow('yyyy')",
+										"type": "Expression"
+									},
+									"year_folder": {
+										"value": "@utcNow('dd-MM-yyyy')",
+										"type": "Expression"
+									}
+								}
+							},
+							"linkedServiceName": {
+								"referenceName": "AzureDatabricksSuarez",
+								"type": "LinkedServiceReference"
+							}
+						}
+					]
+				}
+			}
+		],
+		"folder": {
+			"name": "suareznicolas"
+		},
+		"annotations": [],
+		"lastPublishTime": "2023-05-14T20:06:29Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

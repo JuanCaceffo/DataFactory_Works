@@ -1,0 +1,58 @@
+{
+	"name": "demo_7_metadata_sql_db",
+	"properties": {
+		"activities": [
+			{
+				"name": "Get Metadata SQL DB",
+				"type": "GetMetadata",
+				"dependsOn": [
+					{
+						"activity": "Execute Pipeline1",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataset": {
+						"referenceName": "sql_1_entrada_demo_1",
+						"type": "DatasetReference",
+						"parameters": {
+							"table_name": "species"
+						}
+					},
+					"fieldList": [
+						"exists"
+					]
+				}
+			},
+			{
+				"name": "Execute Pipeline1",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "demo_6_metadata",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			}
+		],
+		"folder": {
+			"name": "demo/Metadata"
+		},
+		"annotations": [],
+		"lastPublishTime": "2023-05-12T16:04:44Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

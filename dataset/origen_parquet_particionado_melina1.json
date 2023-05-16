@@ -1,0 +1,24 @@
+{
+	"name": "origen_parquet_particionado_melina1",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "datalakeformacion1",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "melina-yanguas"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"folderPath": "adventureWorks/trusted/Product",
+				"fileSystem": "melinayanguas"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

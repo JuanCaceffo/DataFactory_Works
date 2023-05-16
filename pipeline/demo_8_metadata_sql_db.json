@@ -1,0 +1,118 @@
+{
+	"name": "demo_8_metadata_sql_db",
+	"properties": {
+		"activities": [
+			{
+				"name": "Get Metadata CSV",
+				"type": "GetMetadata",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataset": {
+						"referenceName": "csv_1_salida_demo_1",
+						"type": "DatasetReference",
+						"parameters": {
+							"file_name": "characters"
+						}
+					},
+					"fieldList": [
+						"exists"
+					],
+					"storeSettings": {
+						"type": "AzureBlobFSReadSettings",
+						"recursive": true,
+						"enablePartitionDiscovery": false
+					},
+					"formatSettings": {
+						"type": "DelimitedTextReadSettings"
+					}
+				}
+			},
+			{
+				"name": "Set variable1",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "Get Metadata CSV",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "cant_columnas",
+					"value": {
+						"value": "@string(activity('Get Metadata CSV').output)",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "If Condition1",
+				"type": "IfCondition",
+				"dependsOn": [
+					{
+						"activity": "Set variable1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"expression": {
+						"value": "@equals(activity('Get Metadata CSV').output,'true' )",
+						"type": "Expression"
+					},
+					"ifTrueActivities": [
+						{
+							"name": "Notebook1",
+							"type": "DatabricksNotebook",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"notebookPath": "/Shared/Demo- ADF: Lee parquet unifcado"
+							},
+							"linkedServiceName": {
+								"referenceName": "AzureDatabricks_demo",
+								"type": "LinkedServiceReference"
+							}
+						}
+					]
+				}
+			}
+		],
+		"variables": {
+			"cant_columnas": {
+				"type": "String"
+			},
+			"resultado": {
+				"type": "Boolean"
+			},
+			"result": {
+				"type": "Boolean"
+			}
+		},
+		"folder": {
+			"name": "Metadata"
+		},
+		"annotations": [],
+		"lastPublishTime": "2023-05-12T16:16:24Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

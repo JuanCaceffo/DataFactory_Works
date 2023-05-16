@@ -1,0 +1,37 @@
+{
+	"name": "pl_databricks_Azul_Selser",
+	"properties": {
+		"description": "se conecta al datalake y guarda como parquet",
+		"activities": [
+			{
+				"name": "Procesamiento de characters",
+				"type": "DatabricksNotebook",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/Users/azulselser@gmail.com/ADF: Conexión al datalake_Azul_Selser",
+					"baseParameters": {
+						"file_name": "Address"
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "AzureDatabricks_Azul_Selser",
+					"type": "LinkedServiceReference"
+				}
+			}
+		],
+		"folder": {
+			"name": "Azul_Selser/tarea_15.05/Demos"
+		},
+		"annotations": [],
+		"lastPublishTime": "2023-05-14T21:05:37Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

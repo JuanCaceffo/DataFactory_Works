@@ -1,0 +1,46 @@
+{
+	"name": "pl_entrega_Azul_Selser",
+	"properties": {
+		"activities": [
+			{
+				"name": "pl_1_levantaDeSQL_Azul_Selser",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "pl_1_levantaDeSQL_Azul_Selser",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "pl_2_limpieza_Azul_Selser",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "pl_1_levantaDeSQL_Azul_Selser",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "pl_2_limpieza_Azul_Selser",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			}
+		],
+		"folder": {
+			"name": "Azul_Selser/tarea_15.05/entrega"
+		},
+		"annotations": [],
+		"lastPublishTime": "2023-05-15T11:18:25Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

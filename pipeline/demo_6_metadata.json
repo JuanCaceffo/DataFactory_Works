@@ -1,0 +1,46 @@
+{
+	"name": "demo_6_metadata",
+	"properties": {
+		"activities": [
+			{
+				"name": "Get Metadata1",
+				"type": "GetMetadata",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataset": {
+						"referenceName": "csv_1_salida_demo_1",
+						"type": "DatasetReference",
+						"parameters": {
+							"file_name": "characters"
+						}
+					},
+					"fieldList": [
+						"structure"
+					],
+					"storeSettings": {
+						"type": "AzureBlobFSReadSettings",
+						"recursive": true,
+						"enablePartitionDiscovery": false
+					},
+					"formatSettings": {
+						"type": "DelimitedTextReadSettings"
+					}
+				}
+			}
+		],
+		"folder": {
+			"name": "demo/Metadata"
+		},
+		"annotations": [],
+		"lastPublishTime": "2023-05-12T15:53:30Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

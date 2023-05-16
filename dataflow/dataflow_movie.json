@@ -1,0 +1,43 @@
+{
+	"name": "dataflow_movie",
+	"properties": {
+		"folder": {
+			"name": "JuanCaceffo/movies"
+		},
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "movies_juanK",
+						"type": "DatasetReference"
+					},
+					"name": "MOVIES"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "movies_salida_Juank",
+						"type": "DatasetReference"
+					},
+					"name": "moviesTrusted"
+				}
+			],
+			"transformations": [],
+			"scriptLines": [
+				"source(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> MOVIES",
+				"MOVIES sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     format: 'parquet',",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> moviesTrusted"
+			]
+		}
+	}
+}

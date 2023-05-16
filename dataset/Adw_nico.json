@@ -1,0 +1,43 @@
+{
+	"name": "Adw_nico",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "datalakeformacion1",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"contenedor": {
+				"type": "string"
+			},
+			"carpeta": {
+				"type": "string"
+			},
+			"archivo": {
+				"type": "string"
+			}
+		},
+		"folder": {
+			"name": "nicolas_fernandez/AzureSQLtabla"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"folderPath": {
+					"value": "@dataset().carpeta",
+					"type": "Expression"
+				},
+				"fileSystem": {
+					"value": "@dataset().contenedor",
+					"type": "Expression"
+				}
+			},
+			"columnDelimiter": ";",
+			"escapeChar": "\\",
+			"quoteChar": "\""
+		},
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

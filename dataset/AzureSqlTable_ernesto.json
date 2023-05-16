@@ -1,0 +1,16 @@
+{
+	"name": "AzureSqlTable_ernesto",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabase_ernesto",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "ernestodavogustto/AdventureWorks"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

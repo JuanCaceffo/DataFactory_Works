@@ -1,0 +1,91 @@
+{
+	"name": "prueba2_mariasol",
+	"properties": {
+		"activities": [
+			{
+				"name": "Set variable1",
+				"type": "SetVariable",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "list_files",
+					"value": [
+						"Product",
+						"ProductCategory",
+						"ProductModel",
+						"ProductModelProductDescription",
+						"ProductDescription",
+						"SalesOrderDetail",
+						"SalesOrderHeader",
+						"Address",
+						"Customer",
+						"CustomerAddress"
+					]
+				}
+			},
+			{
+				"name": "ForEach1",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "Set variable1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@variables('list_files')",
+						"type": "Expression"
+					},
+					"isSequential": true,
+					"activities": [
+						{
+							"name": "Notebook1",
+							"type": "DatabricksNotebook",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"notebookPath": "/Users/solm97@hotmail.com/Conexión al datalake",
+								"baseParameters": {
+									"file_name": {
+										"value": "@concat(item(),'_', utcnow('dd-MM-yyyy'))",
+										"type": "Expression"
+									},
+									"year_file": {
+										"value": "@utcNow('yyyy')",
+										"type": "Expression"
+									}
+								}
+							},
+							"linkedServiceName": {
+								"referenceName": "AzureDatabricks_mariasolserritelli",
+								"type": "LinkedServiceReference"
+							}
+						}
+					]
+				}
+			}
+		],
+		"variables": {
+			"list_files": {
+				"type": "Array"
+			}
+		},
+		"folder": {
+			"name": "maria_sol_serritelli"
+		},
+		"annotations": [],
+		"lastPublishTime": "2023-05-15T04:23:19Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

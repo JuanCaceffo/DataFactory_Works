@@ -1,0 +1,33 @@
+{
+	"name": "sitios_nico",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "datalakeformacion1",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "nicolas_fernandez/parametrizacion_dataset"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "sitios_2023.csv",
+				"folderPath": "DataFactory/files_csv",
+				"fileSystem": "nicolasfernandez"
+			},
+			"columnDelimiter": ";",
+			"escapeChar": "\\",
+			"firstRowAsHeader": false,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "ID;ID_Name;Grupo;Zona;Area ;Director;Asesor;Direccion;Ciudad;Provincia",
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

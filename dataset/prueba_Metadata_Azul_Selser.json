@@ -1,0 +1,24 @@
+{
+	"name": "prueba_Metadata_Azul_Selser",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureDataLakeStorage_Azul_Selser",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "Azul_Selser/tarea_15.05"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"folderPath": "AW_tarea_12.05/rawdata",
+				"fileSystem": "azulselser"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

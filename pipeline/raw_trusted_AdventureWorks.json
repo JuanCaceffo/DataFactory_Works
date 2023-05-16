@@ -1,0 +1,71 @@
+{
+	"name": "raw_trusted_AdventureWorks",
+	"properties": {
+		"activities": [
+			{
+				"name": "trusted_data",
+				"type": "ForEach",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@pipeline().parameters.lista_tablas",
+						"type": "Expression"
+					},
+					"isSequential": true,
+					"activities": [
+						{
+							"name": "Notebook1",
+							"type": "DatabricksNotebook",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"notebookPath": "/Users/caceffojuan@gmail.com/AdventureWorks/rawdata_trusted_AdventureWorks",
+								"baseParameters": {
+									"folder_year_date": {
+										"value": "@concat(utcNow('yyyy'),'/',utcNow('MM-dd-yyyy'))",
+										"type": "Expression"
+									},
+									"file_name": {
+										"value": "@item().TABLE_NAME",
+										"type": "Expression"
+									}
+								}
+							},
+							"linkedServiceName": {
+								"referenceName": "AzureDatabricks_Juan_Caceffo",
+								"type": "LinkedServiceReference"
+							}
+						}
+					]
+				}
+			}
+		],
+		"parameters": {
+			"container": {
+				"type": "string",
+				"defaultValue": "juancaceffo"
+			},
+			"folder": {
+				"type": "string",
+				"defaultValue": "AdventureWorks_ADF/raw_data"
+			},
+			"lista_tablas": {
+				"type": "array"
+			}
+		},
+		"folder": {
+			"name": "JuanCaceffo/AdventureWorks"
+		},
+		"annotations": [],
+		"lastPublishTime": "2023-05-16T18:04:26Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

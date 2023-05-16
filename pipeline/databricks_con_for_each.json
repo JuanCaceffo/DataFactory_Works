@@ -1,0 +1,86 @@
+{
+	"name": "databricks_con_for_each",
+	"properties": {
+		"activities": [
+			{
+				"name": "ForEach_paranotebook",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "Set variable1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@variables('lista_archivos')",
+						"type": "Expression"
+					},
+					"isSequential": true,
+					"activities": [
+						{
+							"name": "Notebook1",
+							"type": "DatabricksNotebook",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"notebookPath": "/Users/melinayanguas@gmail.com/Demo- ADF: Clase 8 Conexión al datalake Melina con for each",
+								"baseParameters": {
+									"files_names": {
+										"value": "@item()",
+										"type": "Expression"
+									}
+								}
+							},
+							"linkedServiceName": {
+								"referenceName": "AzureDatabricksMelina_ForEach",
+								"type": "LinkedServiceReference"
+							}
+						}
+					]
+				}
+			},
+			{
+				"name": "Set variable1",
+				"type": "SetVariable",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "lista_archivos",
+					"value": [
+						"Product",
+						"ProductCategory",
+						"ProductModel",
+						"ProductModelProductDescription",
+						"SalesOrderDetail",
+						"CustomerAddress",
+						"Address",
+						"SalesOrderHeader",
+						"Customer"
+					]
+				}
+			}
+		],
+		"variables": {
+			"lista_archivos": {
+				"type": "Array"
+			}
+		},
+		"folder": {
+			"name": "melina-yanguas"
+		},
+		"annotations": [],
+		"lastPublishTime": "2023-05-16T01:54:35Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

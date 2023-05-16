@@ -1,0 +1,42 @@
+{
+	"name": "Salida_EpisodesScriptLines_parquet_Camila",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "datalakeformacion1",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "Camila/simpsons/trusted"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "EspisodesScriptLines.parquet",
+				"folderPath": "data_flow_practica/trusted/simpsons/EspisodesScripLine",
+				"fileSystem": "camilagomez"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": [
+			{
+				"name": "movieId",
+				"type": "INT32"
+			},
+			{
+				"name": "title",
+				"type": "UTF8"
+			},
+			{
+				"name": "genres",
+				"type": "UTF8"
+			},
+			{
+				"name": "year",
+				"type": "INT32"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

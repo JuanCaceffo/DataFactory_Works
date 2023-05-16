@@ -1,0 +1,38 @@
+{
+	"name": "simpsons",
+	"properties": {
+		"description": "simpsons to trusted",
+		"activities": [
+			{
+				"name": "SimpsonsToTrusted",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "SimpsonsToTrusted",
+						"type": "DataFlowReference"
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					},
+					"traceLevel": "Fine"
+				}
+			}
+		],
+		"folder": {
+			"name": "Camila-Gomez/flows/simpsons"
+		},
+		"annotations": [],
+		"lastPublishTime": "2023-05-11T16:07:27Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

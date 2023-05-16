@@ -1,0 +1,16 @@
+{
+	"name": "AzureSqlTable_ADVENTUREWORKS",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabase_Juan_Caceffo",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "JuanCaceffo/ADVENTUREWORKS_COPY"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

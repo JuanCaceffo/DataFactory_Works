@@ -1,0 +1,237 @@
+{
+	"name": "SimpsonsToTrusted",
+	"properties": {
+		"folder": {
+			"name": "CamilaGomez"
+		},
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "entrada_characters_camila",
+						"type": "DatasetReference"
+					},
+					"name": "EntradaCharacters"
+				},
+				{
+					"dataset": {
+						"referenceName": "entrada_episodes_camila",
+						"type": "DatasetReference"
+					},
+					"name": "EntradaEpisodes"
+				},
+				{
+					"dataset": {
+						"referenceName": "entrada_location_camila",
+						"type": "DatasetReference"
+					},
+					"name": "EntradaLocation"
+				},
+				{
+					"dataset": {
+						"referenceName": "entrada_script_lines_camila",
+						"type": "DatasetReference"
+					},
+					"name": "EntradaScriptLines"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "Salida_LocationScriptLines_parquet_Camila",
+						"type": "DatasetReference"
+					},
+					"name": "SalidaLocationScriptLines"
+				},
+				{
+					"dataset": {
+						"referenceName": "salida_CharactersScriptLines_parquet_camila",
+						"type": "DatasetReference"
+					},
+					"name": "SalidaCharactersScriptLine"
+				},
+				{
+					"dataset": {
+						"referenceName": "Salida_EpisodesScriptLines_parquet_Camila",
+						"type": "DatasetReference"
+					},
+					"name": "SalidaEspisodesScriptLines"
+				}
+			],
+			"transformations": [
+				{
+					"name": "SelectCharacters"
+				},
+				{
+					"name": "SelectEpisodes"
+				},
+				{
+					"name": "SelectLocation"
+				},
+				{
+					"name": "SelectScriptLines"
+				},
+				{
+					"name": "LocationScriptLines"
+				},
+				{
+					"name": "CharactersScriptLines"
+				},
+				{
+					"name": "EpisodesScriptLines"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          id as integer,",
+				"          name as string,",
+				"          normalized_name as string,",
+				"          gender as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> EntradaCharacters",
+				"source(output(",
+				"          id as integer,",
+				"          image_url as string,",
+				"          imdb_rating as float,",
+				"          imdb_votes as float,",
+				"          number_in_season as integer,",
+				"          number_in_series as integer,",
+				"          original_air_date as date,",
+				"          original_air_year as integer,",
+				"          production_code as string,",
+				"          season as integer,",
+				"          title as string,",
+				"          us_viewers_in_millions as integer,",
+				"          video_url as string,",
+				"          views as float",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> EntradaEpisodes",
+				"source(output(",
+				"          id as integer,",
+				"          name as string,",
+				"          normalized_name as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> EntradaLocation",
+				"source(output(",
+				"          id as integer,",
+				"          episode_id as integer,",
+				"          number as string,",
+				"          raw_text as string,",
+				"          timestamp_in_ms as integer,",
+				"          speaking_line as boolean,",
+				"          character_id as integer,",
+				"          location_id as integer,",
+				"          raw_character_text as string,",
+				"          raw_location_text as string,",
+				"          spoken_words as string,",
+				"          normalized_text as string,",
+				"          word_count as integer",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> EntradaScriptLines",
+				"EntradaCharacters select(mapColumn(",
+				"          id,",
+				"          normalized_name",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> SelectCharacters",
+				"EntradaEpisodes select(mapColumn(",
+				"          id,",
+				"          imdb_rating,",
+				"          imdb_votes,",
+				"          number_in_season,",
+				"          number_in_series,",
+				"          original_air_date,",
+				"          original_air_year,",
+				"          production_code,",
+				"          season,",
+				"          title,",
+				"          us_viewers_in_millions,",
+				"          views",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> SelectEpisodes",
+				"EntradaLocation select(mapColumn(",
+				"          id,",
+				"          normalized_name",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> SelectLocation",
+				"EntradaScriptLines select(mapColumn(",
+				"          id,",
+				"          episode_id,",
+				"          number,",
+				"          timestamp_in_ms,",
+				"          speaking_line,",
+				"          character_id,",
+				"          location_id,",
+				"          raw_character_text,",
+				"          raw_location_text,",
+				"          spoken_words,",
+				"          word_count",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> SelectScriptLines",
+				"SelectLocation, SelectScriptLines join(SelectLocation@id == location_id,",
+				"     joinType:'left',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> LocationScriptLines",
+				"SelectCharacters, SelectScriptLines join(SelectCharacters@id == character_id,",
+				"     joinType:'left',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> CharactersScriptLines",
+				"SelectEpisodes, SelectScriptLines join(SelectEpisodes@id == episode_id,",
+				"     joinType:'left',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> EpisodesScriptLines",
+				"LocationScriptLines sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          movieId as integer,",
+				"          title as string,",
+				"          genres as string,",
+				"          year as integer",
+				"     ),",
+				"     format: 'parquet',",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> SalidaLocationScriptLines",
+				"CharactersScriptLines sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     format: 'parquet',",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> SalidaCharactersScriptLine",
+				"EpisodesScriptLines sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          movieId as integer,",
+				"          title as string,",
+				"          genres as string,",
+				"          year as integer",
+				"     ),",
+				"     format: 'parquet',",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> SalidaEspisodesScriptLines"
+			]
+		}
+	}
+}

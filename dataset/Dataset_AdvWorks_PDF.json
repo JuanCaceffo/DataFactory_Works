@@ -1,0 +1,16 @@
+{
+	"name": "Dataset_AdvWorks_PDF",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabase_Foglia",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "pablo_foglia/AdventureWorks"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

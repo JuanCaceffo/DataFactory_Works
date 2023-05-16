@@ -1,0 +1,28 @@
+{
+	"name": "AW_AzureSqlTable_Azul_Selser",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabase_Azul_Selser",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"tableName": {
+				"type": "string"
+			}
+		},
+		"folder": {
+			"name": "Azul_Selser/tarea_12.5"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "SalesLT",
+			"table": {
+				"value": "@dataset().tableName",
+				"type": "Expression"
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

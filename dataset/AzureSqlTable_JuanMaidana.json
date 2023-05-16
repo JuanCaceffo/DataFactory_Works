@@ -1,0 +1,16 @@
+{
+	"name": "AzureSqlTable_JuanMaidana",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabase_JuanMaidana",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "juan_maidana/AdventureWorks"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

@@ -1,0 +1,89 @@
+{
+	"name": "AdvWks_RawTrustedRefined",
+	"properties": {
+		"description": "Look up de tablas en SQL DataBase. Estapa raw con copy data en csv. Etapa trsuted con databricks en parquet. Etapa refined con databricks nuevamente a SQL DataBase",
+		"activities": [
+			{
+				"name": "LookupTablas",
+				"type": "Lookup",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource",
+						"sqlReaderQuery": "SELECT TABLE_SCHEMA, TABLE_NAME FROM Information_Schema.Tables\nWHERE TABLE_SCHEMA != 'dbo' AND TABLE_TYPE = 'BASE TABLE'",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"dataset": {
+						"referenceName": "AdventureWorksCamila",
+						"type": "DatasetReference",
+						"parameters": {
+							"tableName": "1"
+						}
+					},
+					"firstRowOnly": false
+				}
+			},
+			{
+				"name": "AdvWks-RawToTrusted",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "AdvWks_OriginToRaw",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "AdvWks-RawToTrusted",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"lista_tablas": {
+							"value": "@activity('LookupTablas').output.value",
+							"type": "Expression"
+						}
+					}
+				}
+			},
+			{
+				"name": "AdvWks_OriginToRaw",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "LookupTablas",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "AdvWks_OriginToRaw",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			}
+		],
+		"folder": {
+			"name": "Camila-Gomez/AdventureWorks"
+		},
+		"annotations": [],
+		"lastPublishTime": "2023-05-15T21:15:33Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

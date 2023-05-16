@@ -1,0 +1,28 @@
+{
+	"name": "AdventureWorksCamila",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabaseCamila",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"tableName": {
+				"type": "string"
+			}
+		},
+		"folder": {
+			"name": "Camila/AdventureWorks"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "SalesLT",
+			"table": {
+				"value": "@dataset().tableName",
+				"type": "Expression"
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

@@ -1,0 +1,75 @@
+{
+	"name": "Data Factory 3 - Tarea",
+	"properties": {
+		"activities": [
+			{
+				"name": "Itero archivos",
+				"type": "ForEach",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@variables('plFiles')",
+						"type": "Expression"
+					},
+					"isSequential": true,
+					"activities": [
+						{
+							"name": "Clean And Save Csv To Parquet",
+							"type": "DatabricksNotebook",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"notebookPath": "/Users/jgerstnerjavid@outlook.com/DataFactory 3 - Clean Data & Save As Parquet From Params",
+								"baseParameters": {
+									"file_name": {
+										"value": "@item()",
+										"type": "Expression"
+									}
+								}
+							},
+							"linkedServiceName": {
+								"referenceName": "AzureDatabricks_demo",
+								"type": "LinkedServiceReference"
+							}
+						}
+					]
+				}
+			}
+		],
+		"variables": {
+			"plFiles": {
+				"type": "Array",
+				"defaultValue": [
+					"characters",
+					"propamba",
+					"Customer",
+					"ProductModel",
+					"ProductDescription",
+					"Product",
+					"ProductModelProductDescription",
+					"ProductCategory",
+					"BuildVersion",
+					"ErrorLog",
+					"Address",
+					"CustomerAddres",
+					"SalesOrderDetail",
+					"SalesOrderHeader"
+				]
+			}
+		},
+		"folder": {
+			"name": "josegerstner"
+		},
+		"annotations": [],
+		"lastPublishTime": "2023-05-15T13:18:06Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

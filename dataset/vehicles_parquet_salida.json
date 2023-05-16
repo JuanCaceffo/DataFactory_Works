@@ -1,0 +1,25 @@
+{
+	"name": "vehicles_parquet_salida",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "datalakeformacion1",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "juliancohen/tarea08-05"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "vehicles_copia_parquet",
+				"folderPath": "datasetsDF/otroformato",
+				"fileSystem": "juliancohen"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

@@ -1,0 +1,36 @@
+{
+	"name": "adventureworkscsv_mariasol",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "datalakeformacion1",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"nombrecsv": {
+				"type": "string"
+			}
+		},
+		"folder": {
+			"name": "maria_sol_serritelli"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": {
+					"value": "@concat(dataset().nombrecsv,'_',utcnow('dd-MM-yyyy'),'.csv')",
+					"type": "Expression"
+				},
+				"folderPath": "rawdata_adventureworks",
+				"fileSystem": "mariasolserritelli"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

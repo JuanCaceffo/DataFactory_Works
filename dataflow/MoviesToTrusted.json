@@ -1,0 +1,55 @@
+{
+	"name": "MoviesToTrusted",
+	"properties": {
+		"folder": {
+			"name": "CamilaGomez"
+		},
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "movies_Camila",
+						"type": "DatasetReference"
+					},
+					"name": "EntradaMovies"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "SalidaMovies",
+						"type": "DatasetReference"
+					},
+					"name": "SalidaMovies"
+				}
+			],
+			"transformations": [
+				{
+					"name": "ExtractYear",
+					"description": "Extarer 'Año' de la columna title"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          movieId as integer,",
+				"          title as string,",
+				"          genres as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> EntradaMovies",
+				"EntradaMovies derive(year = toInteger(trim(right(title,6),'()')),",
+				"          title = toString(left(title, length(title)-6))) ~> ExtractYear",
+				"ExtractYear sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     format: 'parquet',",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> SalidaMovies"
+			]
+		}
+	}
+}

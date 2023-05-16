@@ -1,0 +1,25 @@
+{
+	"name": "salida_CharactersScriptLines_parquet_camila",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "datalakeformacion1",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "Camila/simpsons/trusted"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "CharactersScriptLine.parquet",
+				"folderPath": "data_flow_practica/trusted/simpsons/CharactersScriptLine",
+				"fileSystem": "camilagomez"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

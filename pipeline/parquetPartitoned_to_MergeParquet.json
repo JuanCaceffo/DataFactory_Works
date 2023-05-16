@@ -1,0 +1,133 @@
+{
+	"name": "parquetPartitoned_to_MergeParquet",
+	"properties": {
+		"activities": [
+			{
+				"name": "parquet unficado",
+				"type": "ForEach",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@variables('list_table')",
+						"type": "Expression"
+					},
+					"isSequential": true,
+					"activities": [
+						{
+							"name": "copyData_Parquet_mergeParquet",
+							"type": "Copy",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "ParquetSource",
+									"storeSettings": {
+										"type": "AzureBlobFSReadSettings",
+										"recursive": true,
+										"wildcardFolderPath": {
+											"value": "@concat(pipeline().parameters.folder,'/',utcNow('yyyy'),'/',utcNow('MM-dd-yyyy'))",
+											"type": "Expression"
+										},
+										"wildcardFileName": "*.parquet",
+										"enablePartitionDiscovery": false
+									},
+									"formatSettings": {
+										"type": "ParquetReadSettings"
+									}
+								},
+								"sink": {
+									"type": "ParquetSink",
+									"storeSettings": {
+										"type": "AzureBlobFSWriteSettings",
+										"copyBehavior": "MergeFiles"
+									},
+									"formatSettings": {
+										"type": "ParquetWriteSettings"
+									}
+								},
+								"enableStaging": false,
+								"translator": {
+									"type": "TabularTranslator",
+									"typeConversion": true,
+									"typeConversionSettings": {
+										"allowDataTruncation": true,
+										"treatBooleanAsNumber": false
+									}
+								}
+							},
+							"inputs": [
+								{
+									"referenceName": "Parquet_Partitioned_entrada_JC",
+									"type": "DatasetReference",
+									"parameters": {
+										"folder": {
+											"value": "@concat(pipeline().parameters.folder,'/',utcNow('yyyy'),'/',utcNow('MM-dd-yyyy'))",
+											"type": "Expression"
+										},
+										"file": {
+											"value": "@item()",
+											"type": "Expression"
+										}
+									}
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "Parquet_merged_salida_JC",
+									"type": "DatasetReference",
+									"parameters": {
+										"folder": {
+											"value": "@concat(pipeline().parameters.folder,'/',utcNow('yyyy'),'/',utcNow('MM-dd-yyyy'))",
+											"type": "Expression"
+										},
+										"file": {
+											"value": "@concat(item(),'.parquet')",
+											"type": "Expression"
+										}
+									}
+								}
+							]
+						}
+					]
+				}
+			}
+		],
+		"parameters": {
+			"folder": {
+				"type": "string",
+				"defaultValue": "AdventureWorks_ADF/trusted_data"
+			}
+		},
+		"variables": {
+			"list_table": {
+				"type": "Array",
+				"defaultValue": [
+					"Product",
+					"ProductCategory",
+					"ProductModel",
+					"ProductModelProductDescription",
+					"ProductDescription",
+					"SalesOrderDetail",
+					"SalesOrderHeader",
+					"Address",
+					"Customer",
+					"CustomerAddress"
+				]
+			}
+		},
+		"folder": {
+			"name": "JuanCaceffo/AdventureWorks"
+		},
+		"annotations": [],
+		"lastPublishTime": "2023-05-15T00:05:45Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

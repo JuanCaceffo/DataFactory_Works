@@ -1,0 +1,37 @@
+{
+	"name": "demo_3_databricks",
+	"properties": {
+		"activities": [
+			{
+				"name": "Procesamiento de Characters",
+				"type": "DatabricksNotebook",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/Shared/Demo- ADF: Clase 8 Conexión al datalake",
+					"baseParameters": {
+						"file_name": "characters_12-05-2023",
+						"year_file": "2023"
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "AzureDatabricks_demo",
+					"type": "LinkedServiceReference"
+				}
+			}
+		],
+		"folder": {
+			"name": "demo/Databricks"
+		},
+		"annotations": [],
+		"lastPublishTime": "2023-05-12T14:55:51Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

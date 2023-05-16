@@ -1,0 +1,142 @@
+{
+	"name": "adventureworks_mariasol",
+	"properties": {
+		"activities": [
+			{
+				"name": "ForEach1",
+				"type": "ForEach",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@variables('list_files')",
+						"type": "Expression"
+					},
+					"isSequential": true,
+					"activities": [
+						{
+							"name": "Copy data1",
+							"type": "Copy",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "AzureSqlSource",
+									"queryTimeout": "02:00:00",
+									"partitionOption": "None"
+								},
+								"sink": {
+									"type": "DelimitedTextSink",
+									"storeSettings": {
+										"type": "AzureBlobFSWriteSettings"
+									},
+									"formatSettings": {
+										"type": "DelimitedTextWriteSettings",
+										"quoteAllText": true,
+										"fileExtension": ".txt"
+									}
+								},
+								"enableStaging": false,
+								"translator": {
+									"type": "TabularTranslator",
+									"typeConversion": true,
+									"typeConversionSettings": {
+										"allowDataTruncation": true,
+										"treatBooleanAsNumber": false
+									}
+								}
+							},
+							"inputs": [
+								{
+									"referenceName": "adventureworks_mariasol",
+									"type": "DatasetReference",
+									"parameters": {
+										"nombre": {
+											"value": "@item()",
+											"type": "Expression"
+										}
+									}
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "adventureworkscsv_mariasol",
+									"type": "DatasetReference",
+									"parameters": {
+										"nombrecsv": {
+											"value": "@item()",
+											"type": "Expression"
+										}
+									}
+								}
+							]
+						},
+						{
+							"name": "Notebook1",
+							"type": "DatabricksNotebook",
+							"dependsOn": [
+								{
+									"activity": "Copy data1",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"notebookPath": "/Users/solm97@hotmail.com/Conexión al datalake",
+								"baseParameters": {
+									"file_name": {
+										"value": "@concat(item(),'_', utcnow('dd-MM-yyyy'))",
+										"type": "Expression"
+									}
+								}
+							},
+							"linkedServiceName": {
+								"referenceName": "AzureDatabricks_mariasolserritelli",
+								"type": "LinkedServiceReference"
+							}
+						}
+					]
+				}
+			}
+		],
+		"variables": {
+			"list_files": {
+				"type": "Array",
+				"defaultValue": [
+					"Product",
+					"ProductCategory",
+					"ProductModel",
+					"ProductModelProductDescription",
+					"ProductDescription",
+					"SalesOrderDetail",
+					"SalesOrderHeader",
+					"Address",
+					"Customer",
+					"CustomerAddress"
+				]
+			}
+		},
+		"folder": {
+			"name": "maria_sol_serritelli"
+		},
+		"annotations": [],
+		"lastPublishTime": "2023-05-15T04:24:07Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

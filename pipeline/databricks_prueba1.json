@@ -1,0 +1,36 @@
+{
+	"name": "databricks_prueba1",
+	"properties": {
+		"activities": [
+			{
+				"name": "Notebook1",
+				"type": "DatabricksNotebook",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/Users/melinayanguas@gmail.com/Demo- ADF: Clase 8 Conexión al datalake Melina",
+					"baseParameters": {
+						"file_name": "Product"
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "AzureDatabricks_Melina",
+					"type": "LinkedServiceReference"
+				}
+			}
+		],
+		"folder": {
+			"name": "melina-yanguas"
+		},
+		"annotations": [],
+		"lastPublishTime": "2023-05-15T04:38:16Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

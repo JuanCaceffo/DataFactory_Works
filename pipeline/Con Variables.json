@@ -1,0 +1,116 @@
+{
+	"name": "Con Variables",
+	"properties": {
+		"activities": [
+			{
+				"name": "ForEachTablas",
+				"type": "ForEach",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@variables('TABLE_NAME')",
+						"type": "Expression"
+					},
+					"isSequential": true,
+					"activities": [
+						{
+							"name": "Copy data AdvWorks",
+							"type": "Copy",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "AzureSqlSource",
+									"queryTimeout": "02:00:00",
+									"partitionOption": "None"
+								},
+								"sink": {
+									"type": "DelimitedTextSink",
+									"storeSettings": {
+										"type": "AzureBlobFSWriteSettings"
+									},
+									"formatSettings": {
+										"type": "DelimitedTextWriteSettings",
+										"quoteAllText": true,
+										"fileExtension": ".txt"
+									}
+								},
+								"enableStaging": true,
+								"stagingSettings": {
+									"linkedServiceName": {
+										"referenceName": "datalakeformacion1",
+										"type": "LinkedServiceReference"
+									},
+									"path": "camilagomez/AdventureWorks_Camila/Rawdata"
+								},
+								"translator": {
+									"type": "TabularTranslator",
+									"typeConversion": true,
+									"typeConversionSettings": {
+										"allowDataTruncation": true,
+										"treatBooleanAsNumber": false
+									}
+								}
+							},
+							"inputs": [
+								{
+									"referenceName": "AdventureWorksCamila",
+									"type": "DatasetReference",
+									"parameters": {
+										"tableName": {
+											"value": "@item()",
+											"type": "Expression"
+										}
+									}
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "AdventureWorks_camila_rawdata",
+									"type": "DatasetReference",
+									"parameters": {
+										"FileName": {
+											"value": "@item()",
+											"type": "Expression"
+										}
+									}
+								}
+							]
+						}
+					]
+				}
+			}
+		],
+		"variables": {
+			"TABLE_NAME": {
+				"type": "Array",
+				"defaultValue": [
+					"Product",
+					"ProductCategory",
+					"ProductModel",
+					"ProductModelProductDescription",
+					"ProductDescription",
+					"SalesOrderDetail",
+					"SalesOrderHeader",
+					"Address",
+					"Customer",
+					"CustomerAddress"
+				]
+			}
+		},
+		"folder": {
+			"name": "Lean"
+		},
+		"annotations": [],
+		"lastPublishTime": "2023-05-12T02:30:57Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

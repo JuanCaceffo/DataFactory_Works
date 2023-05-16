@@ -1,0 +1,210 @@
+{
+	"name": "Data Factory 2 - Tarea",
+	"properties": {
+		"activities": [
+			{
+				"name": "Itero tablas dbo",
+				"type": "ForEach",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@variables('plTablesDBO')",
+						"type": "Expression"
+					},
+					"isSequential": true,
+					"activities": [
+						{
+							"name": "Copio Tablas dbo",
+							"type": "Copy",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "AzureSqlSource",
+									"queryTimeout": "02:00:00",
+									"partitionOption": "None"
+								},
+								"sink": {
+									"type": "DelimitedTextSink",
+									"storeSettings": {
+										"type": "AzureBlobFSWriteSettings"
+									},
+									"formatSettings": {
+										"type": "DelimitedTextWriteSettings",
+										"quoteAllText": true,
+										"fileExtension": ".txt"
+									}
+								},
+								"enableStaging": false,
+								"translator": {
+									"type": "TabularTranslator",
+									"typeConversion": true,
+									"typeConversionSettings": {
+										"allowDataTruncation": true,
+										"treatBooleanAsNumber": false
+									}
+								}
+							},
+							"inputs": [
+								{
+									"referenceName": "dsAdvWorks_DB_Origin_jg",
+									"type": "DatasetReference",
+									"parameters": {
+										"Schema": "dbo",
+										"Table": {
+											"value": "@item()",
+											"type": "Expression"
+										}
+									}
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "dsSaveAsCsvWithDate_jg",
+									"type": "DatasetReference",
+									"parameters": {
+										"dsContainer": "jgerstner",
+										"dsFolder": "DataFactoryTarea/rawdata",
+										"dsFile": {
+											"value": "@item()",
+											"type": "Expression"
+										}
+									}
+								}
+							]
+						}
+					]
+				}
+			},
+			{
+				"name": "Itero tablas SalesTL",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "Itero tablas dbo",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@variables('plTablesTL')",
+						"type": "Expression"
+					},
+					"isSequential": true,
+					"activities": [
+						{
+							"name": "Copio tablas SalesTL",
+							"type": "Copy",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "AzureSqlSource",
+									"queryTimeout": "02:00:00",
+									"partitionOption": "None"
+								},
+								"sink": {
+									"type": "DelimitedTextSink",
+									"storeSettings": {
+										"type": "AzureBlobFSWriteSettings"
+									},
+									"formatSettings": {
+										"type": "DelimitedTextWriteSettings",
+										"quoteAllText": true,
+										"fileExtension": ".txt"
+									}
+								},
+								"enableStaging": false,
+								"translator": {
+									"type": "TabularTranslator",
+									"typeConversion": true,
+									"typeConversionSettings": {
+										"allowDataTruncation": true,
+										"treatBooleanAsNumber": false
+									}
+								}
+							},
+							"inputs": [
+								{
+									"referenceName": "dsAdvWorks_DB_Origin_jg",
+									"type": "DatasetReference",
+									"parameters": {
+										"Schema": "SalesLT",
+										"Table": {
+											"value": "@item()",
+											"type": "Expression"
+										}
+									}
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "dsSaveAsCsvWithDate_jg",
+									"type": "DatasetReference",
+									"parameters": {
+										"dsContainer": "jgerstner",
+										"dsFolder": "DataFactoryTarea/rawdata",
+										"dsFile": {
+											"value": "@item()",
+											"type": "Expression"
+										}
+									}
+								}
+							]
+						}
+					]
+				}
+			}
+		],
+		"variables": {
+			"plTablesDBO": {
+				"type": "Array",
+				"defaultValue": [
+					"characters",
+					"propamba",
+					"BuildVersion",
+					"ErrorLog"
+				]
+			},
+			"plTablesTL": {
+				"type": "Array",
+				"defaultValue": [
+					"Customer",
+					"ProductModel",
+					"ProductDescription",
+					"Product",
+					"ProductModelProductDescription",
+					"ProductCategory",
+					"Address",
+					"CustomerAddres",
+					"SalesOrderDetail",
+					"SalesOrderHeader"
+				]
+			}
+		},
+		"folder": {
+			"name": "josegerstner"
+		},
+		"annotations": [],
+		"lastPublishTime": "2023-05-15T13:11:03Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}
